@@ -1,0 +1,10 @@
+mksys
+/home/htandat/myWorkSpace/wp85_v1.sdef
+-s
+components
+-t
+wp85
+-w
+./_build_wp85_v1/wp85
+-o
+.

@@ -1,0 +1,17 @@
+executables:
+{
+    helloServer = ( printServer )
+}
+ 
+processes:
+{
+    run:
+    {
+        ( helloServer )
+    }
+}
+ 
+extern:
+{
+    printer = helloServer.printServer.printer
+}

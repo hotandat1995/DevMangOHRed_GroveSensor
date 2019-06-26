@@ -1,0 +1,20 @@
+executables:
+{
+    colorSensor = (i2c-utils groverColorComponent)
+}
+ 
+processes:
+{
+    run:
+    {
+        ( colorSensor )
+    }
+}
+
+requires:
+{
+    device:
+    {
+        [rw]    /dev/i2c-1  /dev/
+    }
+}

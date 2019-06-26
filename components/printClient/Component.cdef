@@ -1,0 +1,12 @@
+requires:
+{
+    api:
+    {
+        printer = printer.api
+    }
+}
+
+sources:
+{
+    client.c
+}

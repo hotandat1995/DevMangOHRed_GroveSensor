@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /legato/systems/current/bin/app runProc tools --exe=bin/secstore -- "$@"

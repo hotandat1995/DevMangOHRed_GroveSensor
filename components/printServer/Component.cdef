@@ -1,0 +1,11 @@
+provides:
+{
+    api:
+    {
+        printer = printer.api
+    }
+}
+
+sources:{
+    server.c
+}

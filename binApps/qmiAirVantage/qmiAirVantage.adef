@@ -1,0 +1,57 @@
+
+//
+// Application definition created for the application qmiAirVantage.
+// This is an auto generated definition for a binary-only application.
+//
+// Do not edit, doing so may cause the application to fail.
+//
+
+start: auto
+sandboxed: false
+
+requires:
+{
+}
+
+bundles:
+{
+    binary:
+    {
+        [rx]   ./read-only/bin/qmiAirVantage   /bin/qmiAirVantage
+        [rx]   ./read-only/lib/libComponent_qmiAirVantage.so   /lib/libComponent_qmiAirVantage.so
+    }
+}
+
+processes:
+{
+    faultAction: restart
+
+    envVars:
+    {
+        PATH = "/legato/systems/current/apps/qmiAirVantage/read-only/bin:/usr/local/bin:/usr/bin:/bin"
+    }
+
+    run:
+    {
+        ( qmiAirVantage )
+    }
+}
+
+extern:
+{
+    requires:
+    {
+        qmiAirVantage.qmiAirVantage.le_atServer = $CURDIR/interfaces/le_atServer.api
+        qmiAirVantage.qmiAirVantage.le_avc = $CURDIR/interfaces/le_avc.api
+        qmiAirVantage.qmiAirVantage.le_mdc = $CURDIR/interfaces/le_mdc.api
+        qmiAirVantage.qmiAirVantage.le_data = $CURDIR/interfaces/le_data.api
+    }
+
+}
+bindings:
+{
+    qmiAirVantage.qmiAirVantage.le_atServer -> atService.le_atServer
+    qmiAirVantage.qmiAirVantage.le_avc -> avcService.le_avc
+    qmiAirVantage.qmiAirVantage.le_mdc -> modemService.le_mdc
+    qmiAirVantage.qmiAirVantage.le_data -> dataConnectionService.le_data
+}
