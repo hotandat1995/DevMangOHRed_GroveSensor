@@ -1,0 +1,25 @@
+executables:
+{
+    multiChannelRelay = (i2c-utils multiChannelRelayComponent)
+}
+ 
+processes:
+{
+    run:
+    {
+        ( multiChannelRelay )
+    }
+}
+
+requires:
+{
+    device:
+    {
+        [rw]    /dev/i2c-4  /dev/
+    }
+}
+
+extern:
+{
+    multiChannelRelay.multiChannelRelayComponent.multiChannelRelay
+}

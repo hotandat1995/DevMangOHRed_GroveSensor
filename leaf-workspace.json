@@ -1,14 +1,14 @@
 {
     "leafMinVersion": "1.9.3",
     "profiles": {
-        "wp85dev": {
+        "wp77dev": {
             "packages": {
-                "swi-wp85": "2.8.0",
+                "swi-wp77": "2.5.0",
                 "swi-vscode-support": "190424"
             }
         }
     },
     "env": {
-        "LEGATO_DEF_FILE": "${LEAF_WORKSPACE}/_build_wp85_v1/wp85/app/groverColorSensor/groveColorSensor.adef"
+        "LEGATO_DEF_FILE": "${LEAF_WORKSPACE}/apps/BME680/bme680.adef"
     }
 }

@@ -1,0 +1,18 @@
+cflags:
+{
+    -I $CURDIR/../i2c-utils
+    -std=c99
+}
+
+sources:
+{
+    multiChannelRelay.c
+}
+
+provides:
+{
+    api:
+    {
+        $CURDIR/../multiChannelRelay.api
+    }
+}

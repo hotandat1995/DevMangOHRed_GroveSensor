@@ -1,0 +1,5 @@
+sources:
+{
+    proc.c
+    af_can.c
+}

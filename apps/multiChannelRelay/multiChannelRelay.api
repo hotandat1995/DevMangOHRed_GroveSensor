@@ -1,0 +1,8 @@
+
+FUNCTION turn_off_channel(
+    uint8 channel IN
+);
+FUNCTION turn_on_channel(
+    uint8 channel IN
+);
+FUNCTION uint8 getChannelState();

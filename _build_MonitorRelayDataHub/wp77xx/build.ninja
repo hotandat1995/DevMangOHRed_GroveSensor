@@ -1,0 +1,230 @@
+# Build script for application 'MonitorRelayDataHub'
+
+# == Auto-generated file.  Do not edit. ==
+
+builddir =/home/htandat/WorkSpace/WorkSpace1/_build_MonitorRelayDataHub/wp77xx
+
+cFlags = -I /home/htandat/WorkSpace/WorkSpace1/_build_MonitorRelayDataHub/wp77xx -I/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-legato/interfaces -I/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-legato/framework/include -I/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-legato/build/wp77xx/framework/include -I/home/htandat/WorkSpace/WorkSpace1/apps/RelayDataHubToCloud
+
+cxxFlags = -I /home/htandat/WorkSpace/WorkSpace1/_build_MonitorRelayDataHub/wp77xx -I/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-legato/interfaces -I/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-legato/framework/include -I/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-legato/build/wp77xx/framework/include -I/home/htandat/WorkSpace/WorkSpace1/apps/RelayDataHubToCloud
+
+ldFlags =
+
+target = wp77xx
+
+ifgenFlags =  --import-dir /home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-legato/interfaces --import-dir /home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-legato/framework/include --import-dir /home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-legato/build/wp77xx/framework/include --import-dir /home/htandat/WorkSpace/WorkSpace1/apps/RelayDataHubToCloud
+
+rule CompileC
+  description = Compiling C source
+  depfile = $out.d
+  command =  /home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-gcc --sysroot=/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/armv7a-neon-poky-linux-gnueabi -MMD -MF $out.d -c $in -o $out -DLE_FILENAME=`basename $in` -Wall -Werror -fvisibility=hidden -DMK_TOOLS_BUILD  -DLEGATO_EMBEDDED -fPIC $cFlags
+
+rule CompileCxx
+  description = Compiling C++ source
+  depfile = $out.d
+  command =  /home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-g++ --sysroot=/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/armv7a-neon-poky-linux-gnueabi -MMD -MF $out.d -c $in -o $out -DLE_FILENAME=`basename $in` -Wall -Werror -fvisibility=hidden -DMK_TOOLS_BUILD  -DLEGATO_EMBEDDED -fPIC $cxxFlags
+
+rule ProcessConfig
+  description = Merging config file
+  depfile = $in.d
+  command = /home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-cpp -MMD -MF $in.d -MQ $out -P -I $builddir -E $in -o $out
+
+rule BuildExternal
+  description = Running external build step
+  command = cd $builddir/$workingdir && $
+            export CFLAGS="--sysroot=/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/armv7a-neon-poky-linux-gnueabi $cFlags" $
+            CXXFLAGS="--sysroot=/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/armv7a-neon-poky-linux-gnueabi $cxxFlags" $
+            LDFLAGS="--sysroot=/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/armv7a-neon-poky-linux-gnueabi $ldFlags" $
+            CPPFLAGS="--sysroot=/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/armv7a-neon-poky-linux-gnueabi $cppFlags" $
+            PATH="$${LEGATO_ROOT}/bin:/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi:/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/x86_64-pokysdk-linux/usr/bin:/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/x86_64-pokysdk-linux/bin:/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/x86_64-pokysdk-linux/sbin:$$PATH" $
+            && $
+            $externalCommand
+
+rule GenInterfaceCode
+  description = Generating IPC interface code
+  command = ifgen --output-dir $outputDir $ifgenFlags $in
+
+rule GenPyApiCExtension
+  description = Generating Python API C Extension
+  command = cextgenerator.py $in -o $workDir > /dev/null
+rule CopyFile
+  description = Copying file
+  command = cp -d -f -T $in $out
+
+rule RegenNinjaScript
+  description = Regenerating build script
+  generator = 1
+  command = mkapp --dont-run-ninja "/home/htandat/WorkSpace/WorkSpace1/apps/RelayDataHubToCloud/MonitorRelayDataHub.adef" "-s" "components" "-t" "wp77xx" "-w" "./_build_MonitorRelayDataHub/wp77xx" "-o" "."
+
+rule LinkCLib
+  description = Linking C library
+  command = /home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-gcc --sysroot=/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/armv7a-neon-poky-linux-gnueabi -shared -o $out $in $ldFlags
+
+rule LinkCxxLib
+  description = Linking C++ library
+  command = /home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-g++ --sysroot=/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/armv7a-neon-poky-linux-gnueabi -shared -o $out $in $ldFlags
+
+rule LinkCExe
+  description = Linking C executable
+  command = /home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-gcc --sysroot=/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/armv7a-neon-poky-linux-gnueabi -fPIE -pie -o $out $in $ldFlags
+
+rule LinkCxxExe
+  description = Linking C++ executable
+  command = /home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-g++ --sysroot=/home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-toolchain/sysroots/armv7a-neon-poky-linux-gnueabi -fPIE -pie -o $out $in $ldFlags
+
+rule CompileJava
+  description = Compiling Java source
+  command = javac -cp $classPath -d `dirname $out` $in && touch $out
+
+rule MakeJar
+  description = Making JAR file
+  command = INDIR=`dirname $in`; find $$INDIR -name '*.class' -printf "-C $$INDIR\n%P\n"|xargs jar -cf $out
+
+rule MakeKernelModule
+  description = Build kernel driver module
+  depfile = $out.d
+  command = make -C $in
+
+rule BundleFile
+  description = Bundling file
+  command = legato-install -m $modeFlags $in $out
+
+rule MakeAppInfoProperties
+  description = Creating info.properties
+  command = rm -f $out && $
+            md5=$$( ( cd $workingDir/staging && $
+                      find -P -print0 |LC_ALL=C sort -z && $
+                      find -P -type f -print0 |LC_ALL=C sort -z |xargs -0 md5sum && $
+                      find -P -type l -print0 |LC_ALL=C sort -z |xargs -0 -r -n 1 readlink $
+                    ) | md5sum) && $
+            md5=$${md5%% *} && $
+            ( echo "app.name=$name" && $
+              echo "app.md5=$$md5" && $
+              echo "app.version=$version" && $
+              echo "legato.version=`cat $$LEGATO_ROOT/version`" $
+            ) > $out
+
+rule PackApp
+  description = Packaging app
+  command = $
+            mtime=`stat -c %Y $adefPath` && $
+            find $workingDir/staging -exec touch --no-dereference --date=@$$mtime {} \; && $
+            (cd $workingDir/staging && find . -print0 | LC_ALL=C sort -z |tar --no-recursion --null -T - -cjf - ) > $workingDir/$name.$target && $
+            tarballSize=`stat -c '%s' $workingDir/$name.$target` && $
+            md5=`grep '^app.md5=' $in | sed 's/^app.md5=//'` && $
+            ( printf '{\n' && $
+              printf '"command":"updateApp",\n' && $
+              printf '"name":"$name",\n' && $
+              printf '"version":"$version",\n' && $
+              printf '"md5":"%s",\n' "$$md5" && $
+              printf '"size":%s\n' "$$tarballSize" && $
+              printf '}' && $
+              cat $workingDir/$name.$target $
+            ) > $out
+
+rule BinPackApp
+  description = Packaging app for distribution.
+  command = cp -r $stagingDir/* $workingDir/ && $
+            rm $workingDir/info.properties $workingDir/root.cfg && $
+            mtime=`stat -c %Y $adefPath` && $
+            find $workingDir -exec touch  --no-dereference --date=@$$mtime {} \; && $
+            (cd $workingDir/ && find . -print0 |LC_ALL=C sort -z  |tar --no-recursion --null -T - -cjf - ) > $out
+
+build $builddir/api/45aa9f77ad3051610bf32a23be26ea20/io_common.h: GenInterfaceCode /home/htandat/.leaf/wp77-legato_19.04.0-201907032040/apps/sample/dataHub/io.api |
+  outputDir = $builddir/api/45aa9f77ad3051610bf32a23be26ea20
+  ifgenFlags = --gen-common-interface $ifgenFlags
+
+build $builddir/api/45aa9f77ad3051610bf32a23be26ea20/client/io_interface.h: GenInterfaceCode /home/htandat/.leaf/wp77-legato_19.04.0-201907032040/apps/sample/dataHub/io.api |
+  outputDir = $builddir/api/45aa9f77ad3051610bf32a23be26ea20/client
+  ifgenFlags = --gen-interface $ifgenFlags
+
+build $builddir/api/7c5c11c2384726c8863c19b300135fa3/le_avdata_commonclient.c.o: CompileC $builddir/api/7c5c11c2384726c8863c19b300135fa3/le_avdata_commonclient.c | $builddir/api/7c5c11c2384726c8863c19b300135fa3/le_avdata_messages.h $builddir/api/7c5c11c2384726c8863c19b300135fa3/le_avdata_common.h
+  cFlags = $cFlags
+
+build $builddir/api/7c5c11c2384726c8863c19b300135fa3/le_avdata_commonclient.c $builddir/api/7c5c11c2384726c8863c19b300135fa3/le_avdata_common.h $builddir/api/7c5c11c2384726c8863c19b300135fa3/le_avdata_messages.h: GenInterfaceCode /home/htandat/.leaf/wp77-legato_19.04.0-201907032040/interfaces/airVantage/le_avdata.api |
+  ifgenFlags = --gen-common-client --gen-common-interface --gen-messages $ifgenFlags
+  outputDir = $builddir/api/7c5c11c2384726c8863c19b300135fa3
+
+build $builddir/api/7c5c11c2384726c8863c19b300135fa3/client/le_avdata_client.c.o: CompileC $builddir/api/7c5c11c2384726c8863c19b300135fa3/client/le_avdata_client.c | $builddir/api/7c5c11c2384726c8863c19b300135fa3/client/le_avdata_service.h $builddir/api/7c5c11c2384726c8863c19b300135fa3/client/le_avdata_interface.h $builddir/api/7c5c11c2384726c8863c19b300135fa3/le_avdata_common.h $builddir/api/7c5c11c2384726c8863c19b300135fa3/le_avdata_messages.h
+  cFlags = $cFlags -I$builddir/api/7c5c11c2384726c8863c19b300135fa3
+
+build $builddir/api/7c5c11c2384726c8863c19b300135fa3/client/le_avdata_client.c $builddir/api/7c5c11c2384726c8863c19b300135fa3/client/le_avdata_interface.h $builddir/api/7c5c11c2384726c8863c19b300135fa3/client/le_avdata_service.h: GenInterfaceCode /home/htandat/.leaf/wp77-legato_19.04.0-201907032040/interfaces/airVantage/le_avdata.api |
+  ifgenFlags = --gen-client --gen-interface --gen-local --name-prefix le_avdata $ifgenFlags
+  outputDir = $builddir/api/7c5c11c2384726c8863c19b300135fa3/client
+
+build $builddir/api/45aa9f77ad3051610bf32a23be26ea20/io_commonclient.c.o: CompileC $builddir/api/45aa9f77ad3051610bf32a23be26ea20/io_commonclient.c | $builddir/api/45aa9f77ad3051610bf32a23be26ea20/io_messages.h $builddir/api/45aa9f77ad3051610bf32a23be26ea20/io_common.h
+  cFlags = $cFlags
+
+build $builddir/api/45aa9f77ad3051610bf32a23be26ea20/io_commonclient.c $builddir/api/45aa9f77ad3051610bf32a23be26ea20/io_messages.h: GenInterfaceCode /home/htandat/.leaf/wp77-legato_19.04.0-201907032040/apps/sample/dataHub/io.api |
+  ifgenFlags = --gen-common-client --gen-messages $ifgenFlags
+  outputDir = $builddir/api/45aa9f77ad3051610bf32a23be26ea20
+
+build $builddir/api/45aa9f77ad3051610bf32a23be26ea20/client/io_client.c.o: CompileC $builddir/api/45aa9f77ad3051610bf32a23be26ea20/client/io_client.c | $builddir/api/45aa9f77ad3051610bf32a23be26ea20/client/io_service.h $builddir/api/45aa9f77ad3051610bf32a23be26ea20/client/io_interface.h $builddir/api/45aa9f77ad3051610bf32a23be26ea20/io_common.h $builddir/api/45aa9f77ad3051610bf32a23be26ea20/io_messages.h
+  cFlags = $cFlags -I$builddir/api/45aa9f77ad3051610bf32a23be26ea20
+
+build $builddir/api/45aa9f77ad3051610bf32a23be26ea20/client/io_client.c $builddir/api/45aa9f77ad3051610bf32a23be26ea20/client/io_service.h: GenInterfaceCode /home/htandat/.leaf/wp77-legato_19.04.0-201907032040/apps/sample/dataHub/io.api |
+  ifgenFlags = --gen-client --gen-local --name-prefix io $ifgenFlags
+  outputDir = $builddir/api/45aa9f77ad3051610bf32a23be26ea20/client
+
+build $builddir/api/af1d35acda87423e85cdc7f7b05904bb/admin_commonclient.c.o: CompileC $builddir/api/af1d35acda87423e85cdc7f7b05904bb/admin_commonclient.c | $builddir/api/af1d35acda87423e85cdc7f7b05904bb/admin_messages.h $builddir/api/af1d35acda87423e85cdc7f7b05904bb/admin_common.h $builddir/api/45aa9f77ad3051610bf32a23be26ea20/io_common.h
+  cFlags = $cFlags -I$builddir/api/45aa9f77ad3051610bf32a23be26ea20
+
+build $builddir/api/af1d35acda87423e85cdc7f7b05904bb/admin_commonclient.c $builddir/api/af1d35acda87423e85cdc7f7b05904bb/admin_common.h $builddir/api/af1d35acda87423e85cdc7f7b05904bb/admin_messages.h: GenInterfaceCode /home/htandat/.leaf/wp77-legato_19.04.0-201907032040/apps/sample/dataHub/admin.api | /home/htandat/.leaf/wp77-legato_19.04.0-201907032040/apps/sample/dataHub/io.api
+  ifgenFlags = --gen-common-client --gen-common-interface --gen-messages $ifgenFlags
+  outputDir = $builddir/api/af1d35acda87423e85cdc7f7b05904bb
+
+build $builddir/api/af1d35acda87423e85cdc7f7b05904bb/client/admin_client.c.o: CompileC $builddir/api/af1d35acda87423e85cdc7f7b05904bb/client/admin_client.c | $builddir/api/af1d35acda87423e85cdc7f7b05904bb/client/admin_service.h $builddir/api/af1d35acda87423e85cdc7f7b05904bb/client/admin_interface.h $builddir/api/45aa9f77ad3051610bf32a23be26ea20/client/io_interface.h $builddir/api/45aa9f77ad3051610bf32a23be26ea20/io_common.h $builddir/api/af1d35acda87423e85cdc7f7b05904bb/admin_common.h $builddir/api/af1d35acda87423e85cdc7f7b05904bb/admin_messages.h
+  cFlags = $cFlags -I$builddir/api/45aa9f77ad3051610bf32a23be26ea20/client -I$builddir/api/45aa9f77ad3051610bf32a23be26ea20 -I$builddir/api/af1d35acda87423e85cdc7f7b05904bb
+
+build $builddir/api/af1d35acda87423e85cdc7f7b05904bb/client/admin_client.c $builddir/api/af1d35acda87423e85cdc7f7b05904bb/client/admin_interface.h $builddir/api/af1d35acda87423e85cdc7f7b05904bb/client/admin_service.h: GenInterfaceCode /home/htandat/.leaf/wp77-legato_19.04.0-201907032040/apps/sample/dataHub/admin.api | /home/htandat/.leaf/wp77-legato_19.04.0-201907032040/apps/sample/dataHub/io.api
+  ifgenFlags = --gen-client --gen-interface --gen-local --name-prefix admin $ifgenFlags
+  outputDir = $builddir/api/af1d35acda87423e85cdc7f7b05904bb/client
+
+build $builddir/api/b224b5c3111296f027001c8cdbb232f5/multiChannelRelay_commonclient.c.o: CompileC $builddir/api/b224b5c3111296f027001c8cdbb232f5/multiChannelRelay_commonclient.c | $builddir/api/b224b5c3111296f027001c8cdbb232f5/multiChannelRelay_messages.h $builddir/api/b224b5c3111296f027001c8cdbb232f5/multiChannelRelay_common.h
+  cFlags = $cFlags
+
+build $builddir/api/b224b5c3111296f027001c8cdbb232f5/multiChannelRelay_commonclient.c $builddir/api/b224b5c3111296f027001c8cdbb232f5/multiChannelRelay_common.h $builddir/api/b224b5c3111296f027001c8cdbb232f5/multiChannelRelay_messages.h: GenInterfaceCode /home/htandat/WorkSpace/WorkSpace1/apps/multiChannelRelay/multiChannelRelay.api |
+  ifgenFlags = --gen-common-client --gen-common-interface --gen-messages $ifgenFlags
+  outputDir = $builddir/api/b224b5c3111296f027001c8cdbb232f5
+
+build $builddir/api/b224b5c3111296f027001c8cdbb232f5/client/multiChannelRelay_client.c.o: CompileC $builddir/api/b224b5c3111296f027001c8cdbb232f5/client/multiChannelRelay_client.c | $builddir/api/b224b5c3111296f027001c8cdbb232f5/client/multiChannelRelay_service.h $builddir/api/b224b5c3111296f027001c8cdbb232f5/client/multiChannelRelay_interface.h $builddir/api/b224b5c3111296f027001c8cdbb232f5/multiChannelRelay_common.h $builddir/api/b224b5c3111296f027001c8cdbb232f5/multiChannelRelay_messages.h
+  cFlags = $cFlags -I$builddir/api/b224b5c3111296f027001c8cdbb232f5
+
+build $builddir/api/b224b5c3111296f027001c8cdbb232f5/client/multiChannelRelay_client.c $builddir/api/b224b5c3111296f027001c8cdbb232f5/client/multiChannelRelay_interface.h $builddir/api/b224b5c3111296f027001c8cdbb232f5/client/multiChannelRelay_service.h: GenInterfaceCode /home/htandat/WorkSpace/WorkSpace1/apps/multiChannelRelay/multiChannelRelay.api |
+  ifgenFlags = --gen-client --gen-interface --gen-local --name-prefix multiChannelRelay $ifgenFlags
+  outputDir = $builddir/api/b224b5c3111296f027001c8cdbb232f5/client
+
+build /home/htandat/WorkSpace/WorkSpace1/_build_MonitorRelayDataHub/wp77xx/component/e3c4f2600855ff7bf7c0f6ffc5cb6af7/obj/libComponent_MonitorRelayDataHubComponent.so: LinkCLib $builddir/component/e3c4f2600855ff7bf7c0f6ffc5cb6af7/obj/037596ec9a4794d24a408d29c7d7e3b6.o $builddir/api/7c5c11c2384726c8863c19b300135fa3/client/le_avdata_client.c.o $builddir/api/45aa9f77ad3051610bf32a23be26ea20/client/io_client.c.o $builddir/api/af1d35acda87423e85cdc7f7b05904bb/client/admin_client.c.o $builddir/api/b224b5c3111296f027001c8cdbb232f5/client/multiChannelRelay_client.c.o $builddir/component/e3c4f2600855ff7bf7c0f6ffc5cb6af7/obj/_componentMain.c.o $builddir/api/45aa9f77ad3051610bf32a23be26ea20/io_commonclient.c.o $builddir/api/7c5c11c2384726c8863c19b300135fa3/le_avdata_commonclient.c.o $builddir/api/af1d35acda87423e85cdc7f7b05904bb/admin_commonclient.c.o $builddir/api/b224b5c3111296f027001c8cdbb232f5/multiChannelRelay_commonclient.c.o | /home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-legato/build/wp77xx/framework/lib/liblegato.so
+  ldFlags =  -Wl,--enable-new-dtags,-rpath="\$$ORIGIN/../lib" "-L$$LEGATO_BUILD/framework/lib" -llegato -lpthread -lrt -lm
+
+build $builddir/component/e3c4f2600855ff7bf7c0f6ffc5cb6af7/obj/037596ec9a4794d24a408d29c7d7e3b6.o: CompileC /home/htandat/WorkSpace/WorkSpace1/apps/RelayDataHubToCloud/MonitorRelayDataHubComponent/MonitorRelayDataHub.c || $builddir/api/7c5c11c2384726c8863c19b300135fa3/le_avdata_common.h $builddir/api/7c5c11c2384726c8863c19b300135fa3/le_avdata_messages.h $builddir/api/7c5c11c2384726c8863c19b300135fa3/client/le_avdata_interface.h $builddir/api/7c5c11c2384726c8863c19b300135fa3/client/le_avdata_service.h $builddir/api/45aa9f77ad3051610bf32a23be26ea20/io_common.h $builddir/api/45aa9f77ad3051610bf32a23be26ea20/io_messages.h $builddir/api/45aa9f77ad3051610bf32a23be26ea20/client/io_interface.h $builddir/api/45aa9f77ad3051610bf32a23be26ea20/client/io_service.h $builddir/api/af1d35acda87423e85cdc7f7b05904bb/admin_common.h $builddir/api/af1d35acda87423e85cdc7f7b05904bb/admin_messages.h $builddir/api/af1d35acda87423e85cdc7f7b05904bb/client/admin_interface.h $builddir/api/af1d35acda87423e85cdc7f7b05904bb/client/admin_service.h $builddir/api/b224b5c3111296f027001c8cdbb232f5/multiChannelRelay_common.h $builddir/api/b224b5c3111296f027001c8cdbb232f5/multiChannelRelay_messages.h $builddir/api/b224b5c3111296f027001c8cdbb232f5/client/multiChannelRelay_interface.h $builddir/api/b224b5c3111296f027001c8cdbb232f5/client/multiChannelRelay_service.h $builddir/api/45aa9f77ad3051610bf32a23be26ea20/io_common.h $builddir/api/45aa9f77ad3051610bf32a23be26ea20/client/io_interface.h 
+  cFlags = $cFlags -I$builddir/component/e3c4f2600855ff7bf7c0f6ffc5cb6af7/src -I$builddir/api/7c5c11c2384726c8863c19b300135fa3 -I$builddir/api/7c5c11c2384726c8863c19b300135fa3 -I$builddir/api/7c5c11c2384726c8863c19b300135fa3/client -I$builddir/api/7c5c11c2384726c8863c19b300135fa3/client -I$builddir/api/45aa9f77ad3051610bf32a23be26ea20 -I$builddir/api/45aa9f77ad3051610bf32a23be26ea20 -I$builddir/api/45aa9f77ad3051610bf32a23be26ea20/client -I$builddir/api/45aa9f77ad3051610bf32a23be26ea20/client -I$builddir/api/af1d35acda87423e85cdc7f7b05904bb -I$builddir/api/af1d35acda87423e85cdc7f7b05904bb -I$builddir/api/af1d35acda87423e85cdc7f7b05904bb/client -I$builddir/api/af1d35acda87423e85cdc7f7b05904bb/client -I$builddir/api/b224b5c3111296f027001c8cdbb232f5 -I$builddir/api/b224b5c3111296f027001c8cdbb232f5 -I$builddir/api/b224b5c3111296f027001c8cdbb232f5/client -I$builddir/api/b224b5c3111296f027001c8cdbb232f5/client -I$builddir/api/45aa9f77ad3051610bf32a23be26ea20 -I$builddir/api/45aa9f77ad3051610bf32a23be26ea20/client -I$builddir/api/45aa9f77ad3051610bf32a23be26ea20/client -DLE_COMPONENT_NAME=MonitorRelayDataHubComponent "-DCOMPONENT_INIT=LE_CI_LINKAGE LE_SHARED void _MonitorRelayDataHubComponent_COMPONENT_INIT()" "-DCOMPONENT_INIT_ONCE=LE_CI_LINKAGE LE_SHARED void _MonitorRelayDataHubComponent_COMPONENT_INIT_ONCE()" -DLE_LOG_SESSION=MonitorRelayDataHubComponent_LogSession  -DLE_LOG_LEVEL_FILTER_PTR=MonitorRelayDataHubComponent_LogLevelFilterPtr  -std=c99
+
+build $builddir/component/e3c4f2600855ff7bf7c0f6ffc5cb6af7/obj/_componentMain.c.o: CompileC $builddir/component/e3c4f2600855ff7bf7c0f6ffc5cb6af7/src/_componentMain.c
+  cFlags = $cFlags -I$builddir/component/e3c4f2600855ff7bf7c0f6ffc5cb6af7/src -I$builddir/api/7c5c11c2384726c8863c19b300135fa3 -I$builddir/api/7c5c11c2384726c8863c19b300135fa3 -I$builddir/api/7c5c11c2384726c8863c19b300135fa3/client -I$builddir/api/7c5c11c2384726c8863c19b300135fa3/client -I$builddir/api/45aa9f77ad3051610bf32a23be26ea20 -I$builddir/api/45aa9f77ad3051610bf32a23be26ea20 -I$builddir/api/45aa9f77ad3051610bf32a23be26ea20/client -I$builddir/api/45aa9f77ad3051610bf32a23be26ea20/client -I$builddir/api/af1d35acda87423e85cdc7f7b05904bb -I$builddir/api/af1d35acda87423e85cdc7f7b05904bb -I$builddir/api/af1d35acda87423e85cdc7f7b05904bb/client -I$builddir/api/af1d35acda87423e85cdc7f7b05904bb/client -I$builddir/api/b224b5c3111296f027001c8cdbb232f5 -I$builddir/api/b224b5c3111296f027001c8cdbb232f5 -I$builddir/api/b224b5c3111296f027001c8cdbb232f5/client -I$builddir/api/b224b5c3111296f027001c8cdbb232f5/client -I$builddir/api/45aa9f77ad3051610bf32a23be26ea20 -I$builddir/api/45aa9f77ad3051610bf32a23be26ea20/client -I$builddir/api/45aa9f77ad3051610bf32a23be26ea20/client -DLE_COMPONENT_NAME=MonitorRelayDataHubComponent "-DCOMPONENT_INIT=LE_CI_LINKAGE LE_SHARED void _MonitorRelayDataHubComponent_COMPONENT_INIT()" "-DCOMPONENT_INIT_ONCE=LE_CI_LINKAGE LE_SHARED void _MonitorRelayDataHubComponent_COMPONENT_INIT_ONCE()" -DLE_LOG_SESSION=MonitorRelayDataHubComponent_LogSession  -DLE_LOG_LEVEL_FILTER_PTR=MonitorRelayDataHubComponent_LogLevelFilterPtr 
+
+build $builddir/app/MonitorRelayDataHub/obj/MonitorRelayDataHub/_main.c.o: CompileC /home/htandat/WorkSpace/WorkSpace1/_build_MonitorRelayDataHub/wp77xx/app/MonitorRelayDataHub/src/MonitorRelayDataHub/_main.c
+  cFlags = $cFlags  -DLE_COMPONENT_NAME=MonitorRelayDataHub_exe "-DCOMPONENT_INIT=LE_CI_LINKAGE LE_SHARED void _MonitorRelayDataHub_exe_COMPONENT_INIT()" "-DCOMPONENT_INIT_ONCE=LE_CI_LINKAGE LE_SHARED void MonitorRelayDataHub_exe_COMPONENT_INIT_ONCE()" -DLE_LOG_SESSION=MonitorRelayDataHub_exe_LogSession  -DLE_LOG_LEVEL_FILTER_PTR=MonitorRelayDataHub_exe_LogLevelFilterPtr 
+
+build $builddir/app/MonitorRelayDataHub/obj/MonitorRelayDataHub/MonitorRelayDataHub: LinkCExe $builddir/app/MonitorRelayDataHub/obj/MonitorRelayDataHub/_main.c.o | /home/htandat/WorkSpace/WorkSpace1/_build_MonitorRelayDataHub/wp77xx/component/e3c4f2600855ff7bf7c0f6ffc5cb6af7/obj/libComponent_MonitorRelayDataHubComponent.so /home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-legato/build/wp77xx/framework/lib/liblegato.so /home/htandat/WorkSpace/WorkSpace1/leaf-data/wp77dev/wp77-legato/build/$target/framework/lib/liblegato.so
+  ldFlags = -rdynamic -Wl,--enable-new-dtags,-rpath="\$$ORIGIN/../lib" -L "-L/home/htandat/WorkSpace/WorkSpace1/_build_MonitorRelayDataHub/wp77xx/component/e3c4f2600855ff7bf7c0f6ffc5cb6af7/obj" -lComponent_MonitorRelayDataHubComponent "-L/home/htandat/WorkSpace/WorkSpace1/_build_MonitorRelayDataHub/wp77xx/component/e3c4f2600855ff7bf7c0f6ffc5cb6af7/obj" -lComponent_MonitorRelayDataHubComponent "-L$$LEGATO_BUILD/framework/lib" -llegato -lpthread -lrt -ldl -lm $ldFlags
+
+build $builddir/app/MonitorRelayDataHub/staging/read-only/lib/libComponent_MonitorRelayDataHubComponent.so : BundleFile /home/htandat/WorkSpace/WorkSpace1/_build_MonitorRelayDataHub/wp77xx/component/e3c4f2600855ff7bf7c0f6ffc5cb6af7/obj/libComponent_MonitorRelayDataHubComponent.so
+  modeFlags = u+rw+x,g+r+x,o+x+r-w
+
+build $builddir/app/MonitorRelayDataHub/staging/read-only/bin/MonitorRelayDataHub : BundleFile $builddir/app/MonitorRelayDataHub/obj/MonitorRelayDataHub/MonitorRelayDataHub
+  modeFlags = u+rw+x,g+r+x,o+x+r-w
+
+build $builddir/app/MonitorRelayDataHub/staging/info.properties : MakeAppInfoProperties | $builddir/app/MonitorRelayDataHub/staging/read-only/lib/libComponent_MonitorRelayDataHubComponent.so $builddir/app/MonitorRelayDataHub/staging/read-only/bin/MonitorRelayDataHub $builddir/app/MonitorRelayDataHub/staging/root.cfg
+  name = MonitorRelayDataHub
+  version = 1.0
+  workingDir = $builddir/app/MonitorRelayDataHub
+
+build MonitorRelayDataHub.$target.update: PackApp $builddir/app/MonitorRelayDataHub/staging/info.properties
+  name = MonitorRelayDataHub
+  adefPath = /home/htandat/WorkSpace/WorkSpace1/apps/RelayDataHubToCloud/MonitorRelayDataHub.adef
+  version = 1.0
+  workingDir = $builddir/app/MonitorRelayDataHub
+
+build /home/htandat/WorkSpace/WorkSpace1/_build_MonitorRelayDataHub/wp77xx/build.ninja: RegenNinjaScript | /home/htandat/.leaf/wp77-legato_19.04.0-201907032040/apps/sample/dataHub/admin.api /home/htandat/.leaf/wp77-legato_19.04.0-201907032040/apps/sample/dataHub/io.api /home/htandat/.leaf/wp77-legato_19.04.0-201907032040/interfaces/airVantage/le_avdata.api /home/htandat/WorkSpace/WorkSpace1/apps/RelayDataHubToCloud/MonitorRelayDataHubComponent/Component.cdef /home/htandat/WorkSpace/WorkSpace1/apps/multiChannelRelay/multiChannelRelay.api
+

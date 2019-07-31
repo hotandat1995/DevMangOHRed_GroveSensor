@@ -1,5 +1,0 @@
-DEFINE MESSAGE_LEN = 100;
-
-FUNCTION Print(
-    string message[MESSAGE_LEN] IN
-);

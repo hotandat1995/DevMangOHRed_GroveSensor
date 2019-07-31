@@ -1,0 +1,27 @@
+#include "$LEGATO_ROOT/default.sdef"
+buildVars:
+{
+    MANGOH_BOARD = red
+}
+
+kernelModules:
+{
+    linux_kernel_modules/mangoh/mangoh_red
+    linux_kernel_modules/led/led
+    linux_kernel_modules/bq24296/bq24296
+    linux_kernel_modules/ltc294x/ltc294x
+    linux_kernel_modules/bq27xxx/bq27xxx_battery
+    linux_kernel_modules/bmp280/bmp280-i2c
+    linux_kernel_modules/bmp280/bmp280
+    linux_kernel_modules/bmi160/bmi160-i2c
+    linux_kernel_modules/bmi160/bmi160
+
+    #if ${MANGOH_KERNEL_LACKS_IIO} = 1
+
+        linux_kernel_modules/iio/iio-triggered-buffer
+        linux_kernel_modules/iio/iio-kfifo-buf
+        linux_kernel_modules/iio/iio
+
+    #endif // MANGOH_KERNEL_LACKS_IIO
+    
+}

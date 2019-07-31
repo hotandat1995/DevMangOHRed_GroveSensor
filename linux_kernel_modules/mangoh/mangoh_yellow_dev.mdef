@@ -1,0 +1,47 @@
+cflags:
+{
+    -DDEBUG
+    -I${MANGOH_ROOT}/linux_kernel_modules/expander
+    -I${MANGOH_ROOT}/linux_kernel_modules/opt300x
+    -I${MANGOH_ROOT}/linux_kernel_modules/bq27xxx
+    -I${MANGOH_ROOT}/linux_kernel_modules/bq25601
+
+}
+
+sources:
+{
+    mangoh_yellow.c
+}
+
+params:
+{
+    /*
+     * Do not perform EEPROM based revision detection and assume that the revision is as specified
+     */
+    // force_revision = "dv3"
+
+
+    /*
+     * The EEPROM is used for board identification. In general, the eeprom should not be writable.
+     * If it is necessary to write the eeprom to set the board identification string, then enable
+     * this parameter and then run this command on the target:
+     * # printf 'YOUR STRING HERE\x00' > /sys/bus/i2c/devices/4-0050/eeprom
+     */
+    // allow_eeprom_write = "1"
+}
+
+
+requires:
+{
+    kernelModules:
+    {
+
+        $CURDIR/../bmi160/bmi160-i2c
+        $CURDIR/../rtc-pcf85063/rtc-pcf85063
+        $CURDIR/../bq25601/bq25601
+        $CURDIR/../bq27xxx/bq27xxx_battery
+        $CURDIR/../bmm150/bmc150_magn_i2c
+        $CURDIR/../opt300x/opt300x
+        $CURDIR/../expander/expander
+    }
+}

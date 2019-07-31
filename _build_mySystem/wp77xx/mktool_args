@@ -1,0 +1,10 @@
+mksys
+/home/htandat/WorkSpace/WorkSpace1/mySystem.sdef
+-s
+components
+-t
+wp77xx
+-w
+./_build_mySystem/wp77xx
+-o
+.

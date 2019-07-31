@@ -1,0 +1,23 @@
+cflags:
+{
+    // Needed for lsm6ds3 platform data type definition
+    -I${MANGOH_ROOT}/linux_kernel_modules/lsm6ds3
+}
+
+sources:
+{
+    mangoh_green.c
+}
+
+params:
+{
+    revision = "dv4"
+}
+
+requires:
+{
+    kernelModules:
+    {
+        $CURDIR/../lsm6ds3/lsm6ds3-i2c
+    }
+}

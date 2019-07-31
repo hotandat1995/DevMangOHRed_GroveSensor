@@ -1,0 +1,20 @@
+requires:
+{
+    api:
+    {
+        io.api
+    }
+}
+
+sources:
+{
+    sensor.c
+}
+
+requires:
+{
+    component:
+    {
+        periodicSensor
+    }
+}

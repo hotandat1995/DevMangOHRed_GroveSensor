@@ -1,0 +1,5 @@
+0x00000000	bmp280_regmap_config	/home/htandat/WorkSpace/WorkSpace1/_build_mySystem/wp77xx/modules/bmp280/bmp280	EXPORT_SYMBOL
+0x00000000	bmp180_regmap_config	/home/htandat/WorkSpace/WorkSpace1/_build_mySystem/wp77xx/modules/bmp280/bmp280	EXPORT_SYMBOL
+0x00000000	bmp280_common_remove	/home/htandat/WorkSpace/WorkSpace1/_build_mySystem/wp77xx/modules/bmp280/bmp280	EXPORT_SYMBOL
+0x00000000	bmp280_dev_pm_ops	/home/htandat/WorkSpace/WorkSpace1/_build_mySystem/wp77xx/modules/bmp280/bmp280	EXPORT_SYMBOL
+0x00000000	bmp280_common_probe	/home/htandat/WorkSpace/WorkSpace1/_build_mySystem/wp77xx/modules/bmp280/bmp280	EXPORT_SYMBOL

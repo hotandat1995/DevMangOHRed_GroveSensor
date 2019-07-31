@@ -1,0 +1,10 @@
+mkapp
+/home/htandat/WorkSpace/WorkSpace1/apps/multiChannelRelay/multiChannelRelay.adef
+-s
+components
+-t
+wp77xx
+-w
+./_build_multiChannelRelay/wp77xx
+-o
+.

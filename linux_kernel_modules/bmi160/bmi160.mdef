@@ -1,0 +1,24 @@
+cflags:
+{
+    -DCONFIG_BMI160
+    -DCONFIG_BMI160_I2C
+    -DCONFIG_IIO
+    -DCONFIG_IIO_BUFFER
+    -DCONFIG_IIO_TRIGGERED_BUFFER
+    -DREGMAP
+}
+
+sources:
+{
+    bmi160_core.c
+}
+
+requires:
+{
+    kernelModules:
+    {
+#if ${MANGOH_KERNEL_LACKS_IIO} = 1
+        $CURDIR/../iio/iio-triggered-buffer
+#endif // MANGOH_KERNEL_LACKS_IIO
+    }
+}

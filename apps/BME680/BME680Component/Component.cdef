@@ -1,0 +1,20 @@
+cflags:
+{
+    -I $CURDIR/../i2c-utils
+    -std=c99
+}
+
+requires:
+{
+    api:
+    {
+        $LEGATO_ROOT/apps/sample/dataHub/io.api
+        $LEGATO_ROOT/apps/sample/dataHub/admin.api
+    }
+}
+
+sources:
+{
+    bme680.c
+    Seeed_bme680.c
+}

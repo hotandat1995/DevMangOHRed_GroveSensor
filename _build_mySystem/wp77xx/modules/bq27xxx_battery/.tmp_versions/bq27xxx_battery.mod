@@ -1,0 +1,2 @@
+/home/htandat/WorkSpace/WorkSpace1/_build_mySystem/wp77xx/modules/bq27xxx_battery/bq27xxx_battery.ko
+/home/htandat/WorkSpace/WorkSpace1/_build_mySystem/wp77xx/modules/bq27xxx_battery/bq27xxx_battery_i2c.o /home/htandat/WorkSpace/WorkSpace1/_build_mySystem/wp77xx/modules/bq27xxx_battery/devres_backport.o /home/htandat/WorkSpace/WorkSpace1/_build_mySystem/wp77xx/modules/bq27xxx_battery/bq27xxx_battery_source.o /home/htandat/WorkSpace/WorkSpace1/_build_mySystem/wp77xx/modules/bq27xxx_battery/power_supply_backport.o

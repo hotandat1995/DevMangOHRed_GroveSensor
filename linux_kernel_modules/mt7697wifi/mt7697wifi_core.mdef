@@ -1,0 +1,39 @@
+sources:
+{
+    wmi.c
+    cfg80211.c
+    main.c
+    txrx.c
+    ioctl.c
+}
+
+params:
+{
+    hw_itf = "spi"
+}
+
+cflags:
+{
+//    -DDEBUG 
+    -DCONFIG_CFG80211_WEXT
+    -DCONFIG_WIRELESS
+    -DCONFIG_WIRELESS_EXT
+    -DCONFIG_WEXT_CORE
+    -DCONFIG_WEXT_PROC
+    -DCONFIG_WEXT_SPY
+    -DCONFIG_WEXT_PRIV
+    -I$MANGOH_ROOT/linux_kernel_modules/mt7697common
+    -I$MANGOH_ROOT/linux_kernel_modules/mt7697q
+    -I$MANGOH_ROOT/linux_kernel_modules/mt7697serial
+}
+
+requires:
+{
+    kernelModules:
+    {
+        $CURDIR/../mt7697q/mt7697q
+        $CURDIR/../mt7697serial/mt7697serial
+    }
+}
+
+load: manual

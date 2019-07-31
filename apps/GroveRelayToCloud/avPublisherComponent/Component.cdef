@@ -1,0 +1,18 @@
+sources:
+{
+    avPublisher.c
+}
+
+cflags:
+{
+    -std=c99
+}
+
+requires:
+{
+    api:
+    {
+        airVantage/le_avdata.api
+        $CURDIR/../../multiChannelRelay/multiChannelRelay.api
+    }
+}

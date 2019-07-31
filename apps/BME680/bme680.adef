@@ -1,0 +1,30 @@
+sandboxed: true
+start: auto
+version: 1.0
+
+executables:
+{
+    BME680Service = (i2c-utils BME680Component)
+}
+ 
+processes:
+{
+    run:
+    {
+        ( BME680Service )
+    }
+}
+
+requires:
+{
+    device:
+    {
+        [rw]    /dev/i2c-5  /dev/
+    }
+}
+
+bindings:
+{
+    BME680Service.BME680Component.io    -> dataHub.io
+    BME680Service.BME680Component.admin -> dataHub.admin
+}

@@ -1,0 +1,21 @@
+sandboxed: true
+start: manual
+version: 2.0
+
+executables:
+{
+    GroveRelayToCloud = (avPublisherComponent)
+}
+
+processes:
+{
+    run:
+    {
+        ( GroveRelayToCloud )
+    }
+}
+bindings:
+{
+    GroveRelayToCloud.avPublisherComponent.le_avdata -> avcService.le_avdata
+    GroveRelayToCloud.avPublisherComponent.multiChannelRelay -> multiChannelRelay.multiChannelRelay
+}
