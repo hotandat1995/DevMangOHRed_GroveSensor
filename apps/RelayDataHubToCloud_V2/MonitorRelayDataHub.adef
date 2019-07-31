@@ -1,0 +1,23 @@
+sandboxed: true
+start: manual
+version: 1.0
+
+executables:
+{
+    MonitorRelayDataHub = (MonitorRelayDataHubComponent)
+}
+
+processes:
+{
+    run:
+    {
+        ( MonitorRelayDataHub )
+    }
+}
+bindings:
+{
+    MonitorRelayDataHub.MonitorRelayDataHubComponent.le_avdata -> avcService.le_avdata
+    MonitorRelayDataHub.MonitorRelayDataHubComponent.multiChannelRelay -> multiChannelRelay.multiChannelRelay
+    MonitorRelayDataHub.MonitorRelayDataHubComponent.io -> dataHub.io
+    MonitorRelayDataHub.MonitorRelayDataHubComponent.admin -> dataHub.admin
+}

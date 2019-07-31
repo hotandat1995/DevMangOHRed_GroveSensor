@@ -1,0 +1,22 @@
+sandboxed: true
+start: manual
+version: 1.0
+
+executables:
+{
+    RelayDataHub = (RelayDataHubComponent)
+}
+
+processes:
+{
+    run:
+    {
+        ( RelayDataHub )
+    }
+}
+bindings:
+{
+    RelayDataHub.RelayDataHubComponent.multiChannelRelay -> multiChannelRelay.multiChannelRelay
+    RelayDataHub.RelayDataHubComponent.io -> dataHub.io
+    RelayDataHub.RelayDataHubComponent.admin -> dataHub.admin
+}
