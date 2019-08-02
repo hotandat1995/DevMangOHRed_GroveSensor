@@ -1,5 +1,5 @@
 {
-    "leafMinVersion": "1.9.3",
+    "leafMinVersion": "2.0.1",
     "profiles": {
         "wp77dev": {
             "packages": {
@@ -9,6 +9,6 @@
         }
     },
     "env": {
-        "LEGATO_DEF_FILE": "${LEAF_WORKSPACE}/apps/BME680/bme680.adef"
+        "LEGATO_DEF_FILE": "${LEAF_WORKSPACE}/apps/PIRMotion/PIRMotion.adef"
     }
 }

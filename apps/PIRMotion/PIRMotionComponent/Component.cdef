@@ -1,0 +1,21 @@
+cflags:
+{
+    -std=c99
+}
+
+requires:
+{
+    api:
+    {
+        $LEGATO_ROOT/apps/sample/dataHub/io.api
+        $LEGATO_ROOT/apps/sample/dataHub/admin.api
+        modemServices/le_adc.api
+        le_gpioPin8 = le_gpio.api
+    }
+}
+
+
+sources:
+{
+    PIRMotion.c
+}

@@ -1,0 +1,24 @@
+sandboxed: true
+start: auto
+version: 1.0
+
+executables:
+{
+    PIRMotion = (PIRMotionComponent)
+}
+
+processes:
+{
+    run:
+    {
+        ( PIRMotion )
+    }
+}
+bindings:
+{
+    PIRMotion.PIRMotionComponent.io -> dataHub.io
+    PIRMotion.PIRMotionComponent.admin -> dataHub.admin
+
+    PIRMotion.PIRMotionComponent.le_gpioPin8 -> gpioService.le_gpioPin8
+    PIRMotion.PIRMotionComponent.le_adc -> modemService.le_adc
+}

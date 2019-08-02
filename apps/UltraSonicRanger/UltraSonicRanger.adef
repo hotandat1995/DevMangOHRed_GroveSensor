@@ -1,0 +1,24 @@
+sandboxed: true
+start: auto
+version: 1.0
+
+executables:
+{
+    UltraSonicRanger = (UltraSonicRangerComponent)
+}
+
+processes:
+{
+    run:
+    {
+        ( UltraSonicRanger )
+    }
+}
+bindings:
+{
+    UltraSonicRanger.UltraSonicRangerComponent.io -> dataHub.io
+    UltraSonicRanger.UltraSonicRangerComponent.admin -> dataHub.admin
+
+    UltraSonicRanger.UltraSonicRangerComponent.le_gpioPin8 -> gpioService.le_gpioPin8
+    //UltraSonicRanger.UltraSonicRangerComponent.le_gpioPin22 -> gpioService.le_gpioPin22
+}

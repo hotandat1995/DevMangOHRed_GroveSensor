@@ -1,0 +1,22 @@
+cflags:
+{
+    -std=c99
+}
+
+requires:
+{
+    api:
+    {
+        $LEGATO_ROOT/apps/sample/dataHub/io.api
+        $LEGATO_ROOT/apps/sample/dataHub/admin.api
+
+        le_gpioPin8 = le_gpio.api
+        //le_gpioPin22 = le_gpio.api
+    }
+}
+
+
+sources:
+{
+    UltraSonicRanger.c
+}

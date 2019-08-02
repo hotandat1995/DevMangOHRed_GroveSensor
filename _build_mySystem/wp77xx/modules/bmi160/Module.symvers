@@ -1,3 +1,0 @@
-0x00000000	bmi160_regmap_config	/home/htandat/WorkSpace/WorkSpace1/_build_mySystem/wp77xx/modules/bmi160/bmi160	EXPORT_SYMBOL
-0x00000000	bmi160_core_probe	/home/htandat/WorkSpace/WorkSpace1/_build_mySystem/wp77xx/modules/bmi160/bmi160	EXPORT_SYMBOL_GPL
-0x00000000	bmi160_core_remove	/home/htandat/WorkSpace/WorkSpace1/_build_mySystem/wp77xx/modules/bmi160/bmi160	EXPORT_SYMBOL_GPL
