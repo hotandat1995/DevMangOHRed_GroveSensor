@@ -1,0 +1,14 @@
+start: auto
+
+executables:
+{
+    TestCxx = ( TestComponent )
+}
+
+processes:
+{
+    run:
+    {
+        ( TestCxx )
+    }
+}

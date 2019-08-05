@@ -3,7 +3,8 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/home/htandat/.leaf/wp77-legato_19.04.0-201907032040/framework/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

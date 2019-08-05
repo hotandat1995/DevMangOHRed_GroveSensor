@@ -1,0 +1,30 @@
+sandboxed: true
+start: auto
+version: 1.0
+
+executables:
+{
+    AK9753Service = (i2c-utils AK9753Component)
+}
+ 
+processes:
+{
+    run:
+    {
+        ( AK9753Service )
+    }
+}
+
+requires:
+{
+    device:
+    {
+        [rw]    /dev/i2c-5  /dev/
+    }
+}
+
+bindings:
+{
+    AK9753Service.AK9753Component.io    -> dataHub.io
+    AK9753Service.AK9753Component.admin -> dataHub.admin
+}

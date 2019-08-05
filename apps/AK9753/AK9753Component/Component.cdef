@@ -1,0 +1,25 @@
+// cflags:
+// {
+    
+//     -std=c99
+// }
+
+cxxflags:
+{
+    -std=c++0x
+    -I $CURDIR/../i2c-utils
+}
+
+requires:
+{
+    api:
+    {
+        $LEGATO_ROOT/apps/sample/dataHub/io.api
+        $LEGATO_ROOT/apps/sample/dataHub/admin.api
+    }
+}
+
+sources:
+{
+    AK9753.cpp
+}

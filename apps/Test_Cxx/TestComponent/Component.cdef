@@ -1,0 +1,9 @@
+cxxflags:
+{
+    -std=c++0x
+}
+
+sources:
+{
+    Test_Cxx.cpp
+}
