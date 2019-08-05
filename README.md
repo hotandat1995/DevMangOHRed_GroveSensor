@@ -39,6 +39,11 @@ App BME680
 
 This app provide connect from MangOH board to BME680 sensor (via I2C, SPI not update). It collect data from sensor then sent to DataHub
 
+App AK9753
+----------
+
+This app provide connect from MangOH board to AK9753 sensor (via I2C, C++ language). It collect data from sensor then sent to DataHub.
+
 How to see DataHub
 ------------------
 
