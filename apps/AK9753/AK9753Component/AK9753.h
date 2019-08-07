@@ -207,4 +207,12 @@ private:
   float m_der13, m_der24;
 };
 
+static uint32_t millis(){
+  uint32_t millisecond = 0;
+    timeval tv;
+    gettimeofday(&tv,NULL);
+    millisecond = tv.tv_sec *1000000 + tv.tv_usec/1000;
+    return millisecond;
+}
+
 #endif

@@ -16,4 +16,5 @@ requires:
 sources:
 {
     AK9753.cpp
+    main.cpp
 }
