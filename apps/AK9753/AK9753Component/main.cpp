@@ -15,13 +15,14 @@ static le_timer_Ref_t Reader;
 #define IR4_STATE_NAME "ak9753/state/ic4"
 #define MILLISECS_NAME "ak9753/state/millisecs"
 
-/* Declare classe to read data */
-AK9753 movementSensor;
 // need to adjust these sensitivities lower if you want to detect more far
 // but will introduce error detection
-float sensitivity_presence = 6.0;
-float sensitivity_movement = 10.0;
-int detect_interval = 30; //milliseconds
+#define sensitivity_presence    (float)6.0
+#define sensitivity_movement    (float)10.0
+#define detect_interval         (float)30       //milliseconds
+
+/* Declare classe to read data */
+AK9753 movementSensor;
 PresenceDetector detector(  movementSensor, 
                             sensitivity_presence, 
                             sensitivity_movement, 
