@@ -9,12 +9,13 @@ requires:
     {
         $LEGATO_ROOT/apps/sample/dataHub/io.api
         $LEGATO_ROOT/apps/sample/dataHub/admin.api
-        le_gpioPin8 = le_gpio.api
+        le_clk = le_gpio.api
+        le_sdin = le_gpio.api
     }
 }
 
 
 sources:
 {
-    PIRMotion.c
+    LEDStrip.c
 }

@@ -9,6 +9,6 @@
         }
     },
     "env": {
-        "LEGATO_DEF_FILE": "${LEAF_WORKSPACE}/apps/AK9753/AK9753.adef"
+        "LEGATO_DEF_FILE": "${LEAF_WORKSPACE}/apps/PIRMotion/PIRMotion.adef"
     }
 }

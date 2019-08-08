@@ -1,0 +1,23 @@
+sandboxed: true
+start: auto
+version: 1.0
+
+executables:
+{
+    BlueLED = (BlueLEDComponent)
+}
+
+processes:
+{
+    run:
+    {
+        ( BlueLED )
+    }
+}
+bindings:
+{
+    BlueLED.BlueLEDComponent.io -> dataHub.io
+    BlueLED.BlueLEDComponent.admin -> dataHub.admin
+
+    BlueLED.BlueLEDComponent.le_gpioPin8 -> gpioService.le_gpioPin8
+}

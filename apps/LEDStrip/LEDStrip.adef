@@ -1,0 +1,24 @@
+sandboxed: true
+start: auto
+version: 1.0
+
+executables:
+{
+    LEDStrip = (LEDStripComponent)
+}
+
+processes:
+{
+    run:
+    {
+        ( LEDStrip )
+    }
+}
+bindings:
+{
+    LEDStrip.LEDStripComponent.io -> dataHub.io
+    LEDStrip.LEDStripComponent.admin -> dataHub.admin
+
+    LEDStrip.LEDStripComponent.le_clk -> gpioService.le_gpioPin7
+    LEDStrip.LEDStripComponent.le_sdin -> gpioService.le_gpioPin13
+}

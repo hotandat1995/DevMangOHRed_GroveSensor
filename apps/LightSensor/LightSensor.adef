@@ -1,0 +1,23 @@
+sandboxed: true
+start: auto
+version: 1.0
+
+executables:
+{
+    LightSensor = (LightSensorComponent)
+}
+
+processes:
+{
+    run:
+    {
+        ( LightSensor )
+    }
+}
+bindings:
+{
+    LightSensor.LightSensorComponent.io -> dataHub.io
+    LightSensor.LightSensorComponent.admin -> dataHub.admin
+    
+    LightSensor.LightSensorComponent.le_adc -> modemService.le_adc
+}
