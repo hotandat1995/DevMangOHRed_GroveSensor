@@ -45,6 +45,21 @@ App AK9753
 
 This app provide connect from MangOH board to AK9753 sensor (via I2C, C++). It collect data from sensor then sent to DataHub.
 
+App BlueLED
+----------
+
+This app provide connect from MangOH board to LEDBlue circuit.
+
+App LightSensor
+----------
+
+This app provide connect from MangOH board to Light Sensor, it provide ADC value and Votage value (LUX value not update, because I don't have map to compare ADC value to LUX value, if someone know that map, please sent me via email: hotandat_1995@yahoo.com.vn. Tks you so much).
+
+App LEDStrip
+----------
+
+This app provide connect from MangOH board to LEDStrip driver circuit. It control single Led strip.
+
 How to see DataHub
 ------------------
 
