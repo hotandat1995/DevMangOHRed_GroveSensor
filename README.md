@@ -2,6 +2,7 @@ LegatoPractice
 ================
 
 Post all practice app
+Im using VSCode and Legato, Leaf with this practice.
 
 App groveColorSensor
 --------------------
@@ -42,7 +43,7 @@ This app provide connect from MangOH board to BME680 sensor (via I2C, SPI not up
 App AK9753
 ----------
 
-This app provide connect from MangOH board to AK9753 sensor (via I2C, C++ language). It collect data from sensor then sent to DataHub.
+This app provide connect from MangOH board to AK9753 sensor (via I2C, C++). It collect data from sensor then sent to DataHub.
 
 How to see DataHub
 ------------------
