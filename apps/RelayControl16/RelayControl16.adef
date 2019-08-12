@@ -1,0 +1,24 @@
+sandboxed: true
+start: auto
+version: 1.0
+
+executables:
+{
+    RelayControl16 = (RelayControl16Component)
+}
+
+processes:
+{
+    run:
+    {
+        ( RelayControl16 )
+    }
+}
+bindings:
+{
+    RelayControl16.RelayControl16Component.le_avdata -> avcService.le_avdata
+    RelayControl16.RelayControl16Component.io -> dataHub.io
+    RelayControl16.RelayControl16Component.admin -> dataHub.admin
+
+    RelayControl16.RelayControl16Component.le_gpioPin8 -> gpioService.le_gpioPin8
+}

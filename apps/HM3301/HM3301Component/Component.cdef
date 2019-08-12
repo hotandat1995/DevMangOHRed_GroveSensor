@@ -1,0 +1,20 @@
+cxxflags:
+{
+    -std=c++0x
+    -I $CURDIR/../i2c-utils
+}
+
+requires:
+{
+    api:
+    {
+        $LEGATO_ROOT/apps/sample/dataHub/io.api
+        $LEGATO_ROOT/apps/sample/dataHub/admin.api
+    }
+}
+
+sources:
+{
+    HM3301.cpp
+    main.cpp
+}

@@ -1,0 +1,33 @@
+sandboxed: true
+start: auto
+version: 2.0
+
+executables:
+{
+    HM3301 = (i2c-utils HM3301Component avPubComponent)
+}
+
+processes:
+{
+    run:
+    {
+        ( HM3301 )
+    }
+}
+
+requires:
+{
+    device:
+    {
+        [rw]    /dev/i2c-5  /dev/
+    }
+}
+
+bindings:
+{
+    HM3301.HM3301Component.io    -> dataHub.io
+    HM3301.HM3301Component.admin -> dataHub.admin
+    HM3301.avPubComponent.io    -> dataHub.io
+    HM3301.avPubComponent.admin -> dataHub.admin
+    HM3301.avPubComponent.le_avdata -> avcService.le_avdata
+}

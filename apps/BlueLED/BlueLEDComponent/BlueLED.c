@@ -4,8 +4,8 @@
 static le_timer_Ref_t Reader;
 
 
-le_result_t setting_PIRMotionPin(void){
-    le_gpioPin8_SetPushPullOutput(LE_GPIOPIN8_ACTIVE_LOW,true);
+le_result_t setting_LEDPin(void){
+    le_gpioPin8_SetPushPullOutput(LE_GPIOPIN8_ACTIVE_HIGH,true);
     return LE_OK;
 }
 
@@ -26,14 +26,8 @@ static void ReaderHandler
 COMPONENT_INIT
 {
     LE_INFO("LED control sensor started");
-    setting_PIRMotionPin();
+    setting_LEDPin();
 
-    le_gpioPin8_Activate();
-
-    sleep(1);
-
-    le_gpioPin8_Deactivate();
-    
     //Setup timer to read data
     Reader = le_timer_Create("Get Sample");
     LE_ASSERT_OK(le_timer_SetRepeat (Reader, 0));
