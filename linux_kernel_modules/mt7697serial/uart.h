@@ -19,7 +19,7 @@
 
 #include <linux/types.h>
 #include <linux/fs.h>
-#include "mt7697_i.h"
+#include "../mt7697common/mt7697_i.h"
 #include "uart_i.h"
 
 #define MT7697_UART_DRVNAME    "mt7697serial"

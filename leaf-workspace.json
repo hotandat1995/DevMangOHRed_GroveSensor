@@ -9,6 +9,6 @@
         }
     },
     "env": {
-        "LEGATO_DEF_FILE": "${LEAF_WORKSPACE}/apps/RelayControl16/RelayControl16.adef"
+        "LEGATO_DEF_FILE": "${LEAF_WORKSPACE}/apps/HM3301/HM3301.adef"
     }
 }

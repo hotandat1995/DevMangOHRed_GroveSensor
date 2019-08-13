@@ -20,7 +20,7 @@
 #include <linux/ieee80211.h>
 #include <linux/if_ether.h>
 
-#include "mt7697_i.h"
+#include "../mt7697common/mt7697_i.h"
 #include "wifi_api.h"
 
 #define MT7697_WOW_MAX_FILTERS_PER_LIST 4

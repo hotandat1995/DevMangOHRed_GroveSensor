@@ -20,7 +20,7 @@
 #include <linux/version.h>
 #include <net/cfg80211.h>
 #include <net/iw_handler.h>     /* New driver API */
-#include "mt7697_i.h"
+#include "../mt7697common/mt7697_i.h"
 #include "wifi_api.h"
 #include "wmi.h"
 

@@ -17,7 +17,7 @@
 #ifndef _MT7697_UART_I_H_
 #define _MT7697_UART_I_H_
 
-#include "mt7697_i.h"
+#include "../mt7697common/mt7697_i.h"
 
 void* mt7697_uart_open(rx_hndlr, void*);
 int mt7697_uart_close(void*);

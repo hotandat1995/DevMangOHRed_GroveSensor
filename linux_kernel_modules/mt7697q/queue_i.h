@@ -17,7 +17,7 @@
 #ifndef _MT7697_QUEUE_I_H_
 #define _MT7697_QUEUE_I_H_
 
-#include "mt7697_i.h"
+#include "../mt7697common/mt7697_i.h"
 
 #define mt7697_queue_init_rsp  mt7697_rsp_hdr
 #define mt7697_queue_reset_rsp mt7697_rsp_hdr

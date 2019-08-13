@@ -56,16 +56,19 @@ struct Item
 struct HM3301State
 {
     double sensorNum;
-    // bool channel2State;
-    // bool channel3State;
-    // bool channel4State;
-};
+    double pm1_cf1;
+    double pm25_cf1;
+    double pm10_cf1;
+    double pm1;
+    double pm25;
+    double pm10;
+}HM3301LastData;
 
 static struct
 {
     struct HM3301State recorded; // sensor values most recently recorded
     struct HM3301State read;     // sensor values most recently read
-} ChannelData;
+} HM3301Data;
 
 //--------------------------------------------------------------------------------------------------
 /*
@@ -74,23 +77,108 @@ static struct
 //--------------------------------------------------------------------------------------------------
 
 static le_result_t SensorNumRead(void *value);
+static le_result_t pm1_cf1_Read(void *value);
+static le_result_t pm25_cf1Read(void *value);
+static le_result_t pm10_cf1Read(void *value);
+static le_result_t pm1Read(void *value);
+static le_result_t pm25Read(void *value);
+static le_result_t pm10Read(void *value);
+
+
 static bool SensorNumThreshold(const void *recordedValue, const void *readValue);
+
 static le_result_t SensorNumRecord(le_avdata_RecordRef_t ref, uint64_t timestamp, void *value);
+static le_result_t pm1_cf1Record(le_avdata_RecordRef_t ref, uint64_t timestamp, void *value);
+static le_result_t pm25_cf1Record(le_avdata_RecordRef_t ref, uint64_t timestamp, void *value);
+static le_result_t pm10_cf1Record(le_avdata_RecordRef_t ref, uint64_t timestamp, void *value);
+static le_result_t pm1Record(le_avdata_RecordRef_t ref, uint64_t timestamp, void *value);
+static le_result_t pm25Record(le_avdata_RecordRef_t ref, uint64_t timestamp, void *value);
+static le_result_t pm10Record(le_avdata_RecordRef_t ref, uint64_t timestamp, void *value);
+
 static void SensorNumCopyValue(void *dest, const void *src);
+
+
 
 struct Item Items[] =
     {
         {
-            .name = "Channel 1 state",
+            .name = "Sensor number",
             .read = SensorNumRead,
             .thresholdCheck = SensorNumThreshold,
             .record = SensorNumRecord,
             .copyValue = SensorNumCopyValue,
-            .lastValueRead = &ChannelData.read.sensorNum,
-            .lastValueRecorded = &ChannelData.recorded.sensorNum,
+            .lastValueRead = &HM3301Data.read.sensorNum,
+            .lastValueRecorded = &HM3301Data.recorded.sensorNum,
             .lastTimeRead = 0,
             .lastTimeRecorded = 0,
-        }};
+        },
+        {
+            .name = "pm1_cf1",
+            .read = pm1_cf1_Read,
+            .thresholdCheck = SensorNumThreshold,
+            .record = pm1_cf1Record,
+            .copyValue = SensorNumCopyValue,
+            .lastValueRead = &HM3301Data.read.pm1_cf1,
+            .lastValueRecorded = &HM3301Data.recorded.pm1_cf1,
+            .lastTimeRead = 0,
+            .lastTimeRecorded = 0,
+        },
+        {
+            .name = "pm25_cf1",
+            .read = pm25_cf1Read,
+            .thresholdCheck = SensorNumThreshold,
+            .record = pm25_cf1Record,
+            .copyValue = SensorNumCopyValue,
+            .lastValueRead = &HM3301Data.read.pm25_cf1,
+            .lastValueRecorded = &HM3301Data.recorded.pm25_cf1,
+            .lastTimeRead = 0,
+            .lastTimeRecorded = 0,
+        },
+        {
+            .name = "pm10_cf1",
+            .read = pm10_cf1Read,
+            .thresholdCheck = SensorNumThreshold,
+            .record = pm10_cf1Record,
+            .copyValue = SensorNumCopyValue,
+            .lastValueRead = &HM3301Data.read.pm10_cf1,
+            .lastValueRecorded = &HM3301Data.recorded.pm10_cf1,
+            .lastTimeRead = 0,
+            .lastTimeRecorded = 0,
+        },
+        {
+            .name = "pm1",
+            .read = pm1Read,
+            .thresholdCheck = SensorNumThreshold,
+            .record = pm1Record,
+            .copyValue = SensorNumCopyValue,
+            .lastValueRead = &HM3301Data.read.pm1,
+            .lastValueRecorded = &HM3301Data.recorded.pm1,
+            .lastTimeRead = 0,
+            .lastTimeRecorded = 0,
+        },
+        {
+            .name = "pm25",
+            .read = pm25Read,
+            .thresholdCheck = SensorNumThreshold,
+            .record = pm25Record,
+            .copyValue = SensorNumCopyValue,
+            .lastValueRead = &HM3301Data.read.pm25,
+            .lastValueRecorded = &HM3301Data.recorded.pm25,
+            .lastTimeRead = 0,
+            .lastTimeRecorded = 0,
+        },
+        {
+            .name = "pm10",
+            .read = pm10Read,
+            .thresholdCheck = SensorNumThreshold,
+            .record = pm10Record,
+            .copyValue = SensorNumCopyValue,
+            .lastValueRead = &HM3301Data.read.pm10,
+            .lastValueRecorded = &HM3301Data.recorded.pm10,
+            .lastTimeRead = 0,
+            .lastTimeRecorded = 0,
+        }
+    };
 
 //--------------------------------------------------------------------------------------------------
 /*
@@ -102,23 +190,79 @@ static le_avdata_SessionStateHandlerRef_t HandlerRef;
 static le_avdata_RecordRef_t RecordRef;
 static le_timer_Ref_t SampleTimer;
 static const int DelayBetweenReadings = 1;
-static const int MaxIntervalBetweenPublish = 120;
+static const int MaxIntervalBetweenPublish = 60;
 static const int MinIntervalBetweenPublish = 10;
 // How old the last published value must be for an item to be considered stale. The next time a
 // publish occurs, the most recent reading of all stale items will be published.
 static const int TimeToStale = 60;
-
 static bool DeferredPublish = false;
 static uint64_t LastTimePublished = 0;
 
+/* Read Data from sensor*/
 static le_result_t SensorNumRead(
     void *value ///< Pointer to the int32_t variable to store the reading in
 )
 {
-    bool *v = value;
-    *v = ;//On going
+    double *v = value;
+    *v = HM3301LastData.sensorNum;//On going
     return LE_OK;
 }
+
+static le_result_t pm1_cf1_Read(
+    void *value ///< Pointer to the int32_t variable to store the reading in
+)
+{
+    double *v = value;
+    *v = HM3301LastData.pm1_cf1;//On going
+    return LE_OK;
+}
+
+static le_result_t pm25_cf1Read(
+    void *value ///< Pointer to the int32_t variable to store the reading in
+)
+{
+    double *v = value;
+    *v = HM3301LastData.pm25_cf1;//On going
+    return LE_OK;
+}
+
+static le_result_t pm10_cf1Read(
+    void *value ///< Pointer to the int32_t variable to store the reading in
+)
+{
+    double *v = value;
+    *v = HM3301LastData.pm10_cf1;//On going
+    return LE_OK;
+}
+
+static le_result_t pm1Read(
+    void *value ///< Pointer to the int32_t variable to store the reading in
+)
+{
+    double *v = value;
+    *v = HM3301LastData.pm1;//On going
+    return LE_OK;
+}
+
+static le_result_t pm25Read(
+    void *value ///< Pointer to the int32_t variable to store the reading in
+)
+{
+    double *v = value;
+    *v = HM3301LastData.pm25;//On going
+    return LE_OK;
+}
+
+static le_result_t pm10Read(
+    void *value ///< Pointer to the int32_t variable to store the reading in
+)
+{
+    double *v = value;
+    *v = HM3301LastData.pm10;//On going
+    return LE_OK;
+}
+
+/* Threshold*/
 
 static bool SensorNumThreshold(
     const void *recordedValue, ///< Last recorded light sensor reading
@@ -131,6 +275,7 @@ static bool SensorNumThreshold(
     return abs(*v1 - *v2) > 200;
 }
 
+/* Record */
 static le_result_t SensorNumRecord(
     le_avdata_RecordRef_t ref, ///< Record reference to record the value into
     uint64_t timestamp,        ///< Timestamp to associate with the value
@@ -139,16 +284,125 @@ static le_result_t SensorNumRecord(
 {
     const char *path = "HM3301.HM3301.SensorNum";
 
-    bool *v = value;
+    double *v = value;
     le_result_t result = le_avdata_RecordInt(RecordRef, path, *v, timestamp);
     if (result != LE_OK)
     {
-        LE_ERROR("Couldn't record channel 1 status - %s", LE_RESULT_TXT(result));
+        LE_ERROR("Couldn't record Sensor Number status - %s", LE_RESULT_TXT(result));
     }
 
     return result;
 }
 
+static le_result_t pm1_cf1Record(
+    le_avdata_RecordRef_t ref, ///< Record reference to record the value into
+    uint64_t timestamp,        ///< Timestamp to associate with the value
+    void *value                ///< The int32_t value to record
+)
+{
+    const char *path = "HM3301.HM3301.pm1_cf1";
+
+    double *v = value;
+    le_result_t result = le_avdata_RecordInt(RecordRef, path, *v, timestamp);
+    if (result != LE_OK)
+    {
+        LE_ERROR("Couldn't record pm1_cf1 status - %s", LE_RESULT_TXT(result));
+    }
+
+    return result;
+}
+
+static le_result_t pm25_cf1Record(
+    le_avdata_RecordRef_t ref, ///< Record reference to record the value into
+    uint64_t timestamp,        ///< Timestamp to associate with the value
+    void *value                ///< The int32_t value to record
+)
+{
+    const char *path = "HM3301.HM3301.pm25_cf1";
+
+    double *v = value;
+    le_result_t result = le_avdata_RecordInt(RecordRef, path, *v, timestamp);
+    if (result != LE_OK)
+    {
+        LE_ERROR("Couldn't record pm25_cf1 status - %s", LE_RESULT_TXT(result));
+    }
+
+    return result;
+}
+
+static le_result_t pm10_cf1Record(
+    le_avdata_RecordRef_t ref, ///< Record reference to record the value into
+    uint64_t timestamp,        ///< Timestamp to associate with the value
+    void *value                ///< The int32_t value to record
+)
+{
+    const char *path = "HM3301.HM3301.pm10_cf1";
+
+    double *v = value;
+    le_result_t result = le_avdata_RecordInt(RecordRef, path, *v, timestamp);
+    if (result != LE_OK)
+    {
+        LE_ERROR("Couldn't record pm10_cf1 status - %s", LE_RESULT_TXT(result));
+    }
+
+    return result;
+}
+
+static le_result_t pm1Record(
+    le_avdata_RecordRef_t ref, ///< Record reference to record the value into
+    uint64_t timestamp,        ///< Timestamp to associate with the value
+    void *value                ///< The int32_t value to record
+)
+{
+    const char *path = "HM3301.HM3301.pm1";
+
+    double *v = value;
+    le_result_t result = le_avdata_RecordInt(RecordRef, path, *v, timestamp);
+    if (result != LE_OK)
+    {
+        LE_ERROR("Couldn't record pm1 status - %s", LE_RESULT_TXT(result));
+    }
+
+    return result;
+}
+
+static le_result_t pm25Record(
+    le_avdata_RecordRef_t ref, ///< Record reference to record the value into
+    uint64_t timestamp,        ///< Timestamp to associate with the value
+    void *value                ///< The int32_t value to record
+)
+{
+    const char *path = "HM3301.HM3301.pm25";
+
+    double *v = value;
+    le_result_t result = le_avdata_RecordInt(RecordRef, path, *v, timestamp);
+    if (result != LE_OK)
+    {
+        LE_ERROR("Couldn't record pm25 status - %s", LE_RESULT_TXT(result));
+    }
+
+    return result;
+}
+
+static le_result_t pm10Record(
+    le_avdata_RecordRef_t ref, ///< Record reference to record the value into
+    uint64_t timestamp,        ///< Timestamp to associate with the value
+    void *value                ///< The int32_t value to record
+)
+{
+    const char *path = "HM3301.HM3301.pm10";
+
+    double *v = value;
+    le_result_t result = le_avdata_RecordInt(RecordRef, path, *v, timestamp);
+    if (result != LE_OK)
+    {
+        LE_ERROR("Couldn't record pm10 status - %s", LE_RESULT_TXT(result));
+    }
+
+    return result;
+}
+
+/* Copy value*/
 static void SensorNumCopyValue(
     void *dest,     ///< copy destination
     const void *src ///< copy source
@@ -158,6 +412,78 @@ static void SensorNumCopyValue(
     const bool *s = src;
     *d = *s;
 }
+
+/* Handler to get data from DataHub update event*/
+static void SensorNum_UpdateHandler(
+    double timestamp, ///< time stamp
+    double value,     ///< sensorNum
+    void *contextPtr  ///< not used
+)
+{
+    LE_DEBUG("Sensor Number = %f (timestamped %lf)", value, timestamp);
+    HM3301LastData.sensorNum = value;
+}
+
+static void PM1CF1_UpdateHandler(
+    double timestamp, ///< time stamp
+    double value,     ///< PM1-CF1
+    void *contextPtr  ///< not used
+)
+{
+    LE_DEBUG("PM1CF1 = %f (timestamped %lf)", value, timestamp);
+    HM3301LastData.pm1_cf1 = value;
+}
+
+static void PM25CF1_UpdateHandler(
+    double timestamp, ///< time stamp
+    double value,     ///< PM25-CF1
+    void *contextPtr  ///< not used
+)
+{
+    LE_DEBUG("PM25CF1 = %f (timestamped %lf)", value, timestamp);
+    HM3301LastData.pm25_cf1 = value;
+}
+
+static void PM10CF1_UpdateHandler(
+    double timestamp, ///< time stamp
+    double value,     ///< PM10-CF1
+    void *contextPtr  ///< not used
+)
+{
+    LE_DEBUG("PM10CF1 = %f (timestamped %lf)", value, timestamp);
+    HM3301LastData.pm10_cf1 = value;
+}
+
+static void PM1_UpdateHandler(
+    double timestamp, ///< time stamp
+    double value,     ///< PM1
+    void *contextPtr  ///< not used
+)
+{
+    LE_DEBUG("PM1 = %f (timestamped %lf)", value, timestamp);
+    HM3301LastData.pm1 = value;
+}
+
+static void PM25_UpdateHandler(
+    double timestamp, ///< time stamp
+    double value,     ///< PM25
+    void *contextPtr  ///< not used
+)
+{
+    LE_DEBUG("PM25 = %f (timestamped %lf)", value, timestamp);
+    HM3301LastData.pm25 = value;
+}
+
+static void PM10_UpdateHandler(
+    double timestamp, ///< time stamp
+    double value,     ///< PM10
+    void *contextPtr  ///< not used
+)
+{
+    LE_DEBUG("PM10 = %f (timestamped %lf)", value, timestamp);
+    HM3301LastData.pm10 = value;
+}
+
 
 //--------------------------------------------------------------------------------------------------
 /**
@@ -371,8 +697,30 @@ COMPONENT_INIT
     result = io_CreateInput(PM10_VALUE_NAME,      IO_DATA_TYPE_NUMERIC, "ug/m3");
     LE_ASSERT(result == LE_OK);
 
+    // Register for notification of updates to the value.
+    io_AddNumericPushHandler(SENSORNUM_VALUE_NAME,  SensorNum_UpdateHandler, NULL);
+    io_AddNumericPushHandler(PM1CF1_VALUE_NAME,     PM1CF1_UpdateHandler,    NULL);
+    io_AddNumericPushHandler(PM25CF1_VALUE_NAME,    PM25CF1_UpdateHandler,   NULL);
+    io_AddNumericPushHandler(PM10CF1_VALUE_NAME,    PM10CF1_UpdateHandler,   NULL);
+    io_AddNumericPushHandler(PM1_VALUE_NAME,        PM1_UpdateHandler,       NULL);
+    io_AddNumericPushHandler(PM25_VALUE_NAME,       PM25_UpdateHandler,      NULL);
+    io_AddNumericPushHandler(PM10_VALUE_NAME,       PM10_UpdateHandler,      NULL);
+
+
     // Connect to the sensor data stored in DataHub
-    result = admin_SetSource("/app/hm3301/" SENSORNUM_VALUE_NAME, SENSORNUM_STATE);
+    result = admin_SetSource("/app/hm3301/" SENSORNUM_VALUE_NAME,   SENSORNUM_STATE);
+    LE_ASSERT(result == LE_OK);
+    result = admin_SetSource("/app/hm3301/" PM1CF1_VALUE_NAME,      PM1CF1_STATE);
+    LE_ASSERT(result == LE_OK);
+    result = admin_SetSource("/app/hm3301/" PM25CF1_VALUE_NAME,     PM25CF1_STATE);
+    LE_ASSERT(result == LE_OK);
+    result = admin_SetSource("/app/hm3301/" PM10CF1_VALUE_NAME,     PM10CF1_STATE);
+    LE_ASSERT(result == LE_OK);
+    result = admin_SetSource("/app/hm3301/" PM1_VALUE_NAME,         PM1_STATE);
+    LE_ASSERT(result == LE_OK);
+    result = admin_SetSource("/app/hm3301/" PM25_VALUE_NAME,        PM25_STATE);
+    LE_ASSERT(result == LE_OK);
+    result = admin_SetSource("/app/hm3301/" PM10_VALUE_NAME,        PM10_STATE);
     LE_ASSERT(result == LE_OK);
     
 

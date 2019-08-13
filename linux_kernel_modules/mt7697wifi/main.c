@@ -18,9 +18,9 @@
 #include <linux/kernel.h>
 #include <linux/platform_device.h>
 #include <net/cfg80211.h>
-#include "mt7697_i.h"
-#include "queue_i.h"
-#include "uart_i.h"
+#include "../mt7697common/mt7697_i.h"
+#include "../mt7697q/queue_i.h"
+#include "../mt7697serial/uart_i.h"
 #include "common.h"
 #include "ioctl.h"
 #include "core.h"

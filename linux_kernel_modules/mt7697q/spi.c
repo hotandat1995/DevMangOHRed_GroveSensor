@@ -25,7 +25,7 @@
 #include <linux/of.h>
 #include <linux/usb.h>
 #include <linux/gpio.h>
-#include "spi-cp2130.h"
+#include "../cp2130/spi-cp2130.h"
 #include "interrupt.h"
 #include "queue.h"
 #include "spi.h"

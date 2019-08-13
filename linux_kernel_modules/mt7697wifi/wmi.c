@@ -17,7 +17,7 @@
 #include <linux/types.h>
 #include <linux/rtnetlink.h>
 #include <linux/etherdevice.h>
-#include "queue_i.h"
+#include "../mt7697q/queue_i.h"
 #include "wmi.h"
 #include "core.h"
 #include "cfg80211.h"
