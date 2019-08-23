@@ -4,11 +4,11 @@
         "wp77dev": {
             "packages": {
                 "swi-wp77": "2.5.0",
-                "swi-vscode-support": "190424"
+                "swi-vscode-support": "190731"
             }
         }
     },
     "env": {
-        "LEGATO_DEF_FILE": "${LEAF_WORKSPACE}/apps/HM3301/HM3301.adef"
+        "LEGATO_DEF_FILE": "${LEAF_WORKSPACE}/apps/RelayControl16/RelayControl16.adef"
     }
 }

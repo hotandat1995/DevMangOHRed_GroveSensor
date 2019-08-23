@@ -17,8 +17,6 @@
 #define PM25_STATE      "/app/hm3301/value/pm25"
 #define PM10_STATE      "/app/hm3301/value/pm10"
 
-#define COUNTER_NAME "counter/value"
-
 struct Item
 {
     // A human readable name for the sensor
@@ -62,7 +60,7 @@ struct HM3301State
     double pm1;
     double pm25;
     double pm10;
-}HM3301LastData;
+} HM3301LastData;
 
 static struct
 {
@@ -75,7 +73,7 @@ static struct
  * static function declarations
  */
 //--------------------------------------------------------------------------------------------------
-
+//Read data callback
 static le_result_t SensorNumRead(void *value);
 static le_result_t pm1_cf1_Read(void *value);
 static le_result_t pm25_cf1Read(void *value);
@@ -84,9 +82,10 @@ static le_result_t pm1Read(void *value);
 static le_result_t pm25Read(void *value);
 static le_result_t pm10Read(void *value);
 
-
+//Set threshold 
 static bool SensorNumThreshold(const void *recordedValue, const void *readValue);
 
+//Add record data
 static le_result_t SensorNumRecord(le_avdata_RecordRef_t ref, uint64_t timestamp, void *value);
 static le_result_t pm1_cf1Record(le_avdata_RecordRef_t ref, uint64_t timestamp, void *value);
 static le_result_t pm25_cf1Record(le_avdata_RecordRef_t ref, uint64_t timestamp, void *value);
@@ -95,9 +94,8 @@ static le_result_t pm1Record(le_avdata_RecordRef_t ref, uint64_t timestamp, void
 static le_result_t pm25Record(le_avdata_RecordRef_t ref, uint64_t timestamp, void *value);
 static le_result_t pm10Record(le_avdata_RecordRef_t ref, uint64_t timestamp, void *value);
 
-static void SensorNumCopyValue(void *dest, const void *src);
-
-
+//Copy value
+static void CopyValue(void *dest, const void *src);
 
 struct Item Items[] =
     {
@@ -106,7 +104,7 @@ struct Item Items[] =
             .read = SensorNumRead,
             .thresholdCheck = SensorNumThreshold,
             .record = SensorNumRecord,
-            .copyValue = SensorNumCopyValue,
+            .copyValue = CopyValue,
             .lastValueRead = &HM3301Data.read.sensorNum,
             .lastValueRecorded = &HM3301Data.recorded.sensorNum,
             .lastTimeRead = 0,
@@ -117,7 +115,7 @@ struct Item Items[] =
             .read = pm1_cf1_Read,
             .thresholdCheck = SensorNumThreshold,
             .record = pm1_cf1Record,
-            .copyValue = SensorNumCopyValue,
+            .copyValue = CopyValue,
             .lastValueRead = &HM3301Data.read.pm1_cf1,
             .lastValueRecorded = &HM3301Data.recorded.pm1_cf1,
             .lastTimeRead = 0,
@@ -128,7 +126,7 @@ struct Item Items[] =
             .read = pm25_cf1Read,
             .thresholdCheck = SensorNumThreshold,
             .record = pm25_cf1Record,
-            .copyValue = SensorNumCopyValue,
+            .copyValue = CopyValue,
             .lastValueRead = &HM3301Data.read.pm25_cf1,
             .lastValueRecorded = &HM3301Data.recorded.pm25_cf1,
             .lastTimeRead = 0,
@@ -139,7 +137,7 @@ struct Item Items[] =
             .read = pm10_cf1Read,
             .thresholdCheck = SensorNumThreshold,
             .record = pm10_cf1Record,
-            .copyValue = SensorNumCopyValue,
+            .copyValue = CopyValue,
             .lastValueRead = &HM3301Data.read.pm10_cf1,
             .lastValueRecorded = &HM3301Data.recorded.pm10_cf1,
             .lastTimeRead = 0,
@@ -150,7 +148,7 @@ struct Item Items[] =
             .read = pm1Read,
             .thresholdCheck = SensorNumThreshold,
             .record = pm1Record,
-            .copyValue = SensorNumCopyValue,
+            .copyValue = CopyValue,
             .lastValueRead = &HM3301Data.read.pm1,
             .lastValueRecorded = &HM3301Data.recorded.pm1,
             .lastTimeRead = 0,
@@ -161,7 +159,7 @@ struct Item Items[] =
             .read = pm25Read,
             .thresholdCheck = SensorNumThreshold,
             .record = pm25Record,
-            .copyValue = SensorNumCopyValue,
+            .copyValue = CopyValue,
             .lastValueRead = &HM3301Data.read.pm25,
             .lastValueRecorded = &HM3301Data.recorded.pm25,
             .lastTimeRead = 0,
@@ -172,7 +170,7 @@ struct Item Items[] =
             .read = pm10Read,
             .thresholdCheck = SensorNumThreshold,
             .record = pm10Record,
-            .copyValue = SensorNumCopyValue,
+            .copyValue = CopyValue,
             .lastValueRead = &HM3301Data.read.pm10,
             .lastValueRecorded = &HM3301Data.recorded.pm10,
             .lastTimeRead = 0,
@@ -403,7 +401,7 @@ static le_result_t pm10Record(
 }
 
 /* Copy value*/
-static void SensorNumCopyValue(
+static void CopyValue(
     void *dest,     ///< copy destination
     const void *src ///< copy source
 )
@@ -608,7 +606,8 @@ static void SampleTimerHandler(
         if (r == LE_OK)
         {
             it->lastTimeRead = now;
-            if (it->lastTimeRecorded == 0 || it->thresholdCheck(it->lastValueRead, it->lastValueRecorded))
+            if (it->lastTimeRecorded == 0 
+             || it->thresholdCheck(it->lastValueRead, it->lastValueRecorded))
             {
                 r = it->record(RecordRef, now, it->lastValueRead);
                 if (r == LE_OK)
@@ -696,6 +695,7 @@ COMPONENT_INIT
     LE_ASSERT(result == LE_OK);
     result = io_CreateInput(PM10_VALUE_NAME,      IO_DATA_TYPE_NUMERIC, "ug/m3");
     LE_ASSERT(result == LE_OK);
+
 
     // Register for notification of updates to the value.
     io_AddNumericPushHandler(SENSORNUM_VALUE_NAME,  SensorNum_UpdateHandler, NULL);

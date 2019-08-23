@@ -10,6 +10,7 @@ requires:
         $LEGATO_ROOT/apps/sample/dataHub/io.api
         $LEGATO_ROOT/apps/sample/dataHub/admin.api
         le_gpioPin8 = le_gpio.api
+        le_gpioPin40 = le_gpio.api
         airVantage/le_avdata.api
     }
 }

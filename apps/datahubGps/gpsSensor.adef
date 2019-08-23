@@ -1,0 +1,20 @@
+executables:
+{
+    gpsSensord = ( gpsSensor )
+}
+
+processes:
+{
+    run:
+    {
+        ( gpsSensord )
+    }
+}
+
+bindings:
+{
+    gpsSensord.gpsSensor.io -> dataHub.io
+    gpsSensord.gpsSensor.le_pos -> positioningService.le_pos
+    gpsSensord.gpsSensor.le_posCtrl -> positioningService.le_posCtrl
+    gpsSensord.gpsSensor.le_gnss -> positioningService.le_gnss
+}
