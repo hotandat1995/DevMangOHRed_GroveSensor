@@ -6,9 +6,15 @@
                 "swi-wp77": "2.5.0",
                 "swi-vscode-support": "190731"
             }
+        },
+        "wp76dev": {
+            "packages": {
+                "swi-wp76": "4.1.0",
+                "swi-vscode-support": "190731"
+            }
         }
     },
     "env": {
-        "LEGATO_DEF_FILE": "${LEAF_WORKSPACE}/apps/RelayControl16/RelayControl16.adef"
+        "LEGATO_DEF_FILE": "${LEAF_WORKSPACE}/apps/SmartParking/SmartParking.adef"
     }
 }

@@ -19,6 +19,36 @@ le_result_t setting_Pin(void){
     return LE_OK;
 }
 
+static void PushCallbackHandler(
+    le_avdata_PushStatus_t status, ///< Push success/failure status
+    void *context                  ///< Not used
+)
+{
+    switch (status)
+    {
+    case LE_AVDATA_PUSH_SUCCESS:
+        // data pushed successfully
+        //LE_INFO("Data push successfully");
+        break;
+
+    case LE_AVDATA_PUSH_FAILED:
+        LE_WARN("Push was not successful");
+        break;
+
+    default:
+        LE_ERROR("Unhandled push status %d", status);
+        break;
+    }
+}
+
+// static uint64_t GetCurrentTimestamp(void)
+// {
+//     struct timeval tv;
+//     gettimeofday(&tv, NULL);
+//     uint64_t utcMilliSec = (uint64_t)(tv.tv_sec) * 1000 + (uint64_t)(tv.tv_usec) / 1000;
+//     return utcMilliSec;
+// }
+
 static void SampleTimerHandler
 (
     le_timer_Ref_t timer ///< Sensor sampling timer
@@ -26,22 +56,11 @@ static void SampleTimerHandler
 {
     //uint64_t now = GetCurrentTimestamp();
 
-    // le_result_t r = le_avdata_PushRecord(RecordRef, PushCallbackHandler, NULL);
-    // if (r != LE_OK)
-    // {
-    //     LE_ERROR("Failed to push record - %s", LE_RESULT_TXT(r));
-    // }
-    // if(channel1_status == true)
-    // {
-    //     le_gpioPin8_Deactivate();
-    //     channel1_status = false;
-    // }
-    // else
-    // {
-    //     le_gpioPin8_Activate();
-    //     channel1_status = true;
-    // }
-    
+    le_result_t r = le_avdata_PushRecord(RecordRef, PushCallbackHandler, NULL);
+    if (r != LE_OK)
+    {
+        LE_ERROR("Failed to push record - %s", LE_RESULT_TXT(r));
+    }
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -103,11 +122,9 @@ static void StateChannel1Setting
     void *contextPtr
 )
 {
-    LE_INFO("Change Lower bound");
     le_result_t result = LE_OK;
     int32_t newBound = 0;
 
-    LE_INFO("Set value");
     result = le_avdata_GetInt(RELAY_CMD_SET_STATE_CHANNEL1,&newBound);
     if (result != LE_OK)
     {
@@ -127,7 +144,7 @@ static void StateChannel1Setting
     {
         le_gpioPin8_Activate();
         channel1_status = true;
-        LE_INFO("LED 1 ONN");
+        LE_INFO("LED 1 ON");
     }
 }
 
@@ -139,11 +156,9 @@ static void StateChannel2Setting
     void *contextPtr
 )
 {
-    LE_INFO("Change Lower bound");
     le_result_t result = LE_OK;
     int32_t newBound = 0;
 
-    LE_INFO("Set value");
     result = le_avdata_GetInt(RELAY_CMD_SET_STATE_CHANNEL2,&newBound);
     if (result != LE_OK)
     {
@@ -167,7 +182,8 @@ static void StateChannel2Setting
     }
 }
 
-static void BlinkChannel1Setting(
+static void BlinkChannel1Setting
+(
     const char *path,
     le_avdata_AccessType_t accessType,
     le_avdata_ArgumentListRef_t argumentList,
@@ -210,7 +226,7 @@ COMPONENT_INIT
     // AirVantage congfigure
     LE_INFO("Create sameple time");
     SampleTimer = le_timer_Create("Read channel");
-    LE_ASSERT_OK(le_timer_SetMsInterval(SampleTimer, 1 * 1000));
+    LE_ASSERT_OK(le_timer_SetMsInterval(SampleTimer, 10 * 1000));
     LE_ASSERT_OK(le_timer_SetRepeat(SampleTimer, 0));
     LE_ASSERT_OK(le_timer_SetHandler(SampleTimer, SampleTimerHandler));
     le_timer_Start(SampleTimer);
@@ -230,5 +246,5 @@ COMPONENT_INIT
     HandlerRef = le_avdata_AddSessionStateHandler(AvSessionStateHandler, NULL);
     AvSession = le_avdata_RequestSession();
 
-    LE_FATAL_IF(AvSession == NULL, "Failed to request avdata session")
+    LE_FATAL_IF(AvSession == NULL, "Failed to request avdata session");
 }

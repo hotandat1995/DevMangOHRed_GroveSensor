@@ -15,12 +15,25 @@ processes:
     }
 }
 
+//--------------------------------------------------------------------------------------------------
+/*
+    Explantion board:       MangOH Red:     Chip Pin:
+
+    le_HC595_clock          IOT0_GPIO1      pin42
+    le_HC595_data           IOT0_GPIO2      pin13
+    le_HC595_latch          IOT0_GPIO3      pin7
+    le_HC595_reset          IOT0_GPIO4      pin8
+ */
+//--------------------------------------------------------------------------------------------------
+
 bindings:
 {
     RelayControl16.RelayControl16Component.le_avdata -> avcService.le_avdata
     RelayControl16.RelayControl16Component.io -> dataHub.io
     RelayControl16.RelayControl16Component.admin -> dataHub.admin
 
-    RelayControl16.RelayControl16Component.le_gpioPin8 -> gpioService.le_gpioPin8
-    RelayControl16.RelayControl16Component.le_gpioPin40 -> gpioService.le_gpioPin40
+    RelayControl16.RelayControl16Component.le_HC595_clock -> gpioService.le_gpioPin42
+    RelayControl16.RelayControl16Component.le_HC595_data  -> gpioService.le_gpioPin13
+    RelayControl16.RelayControl16Component.le_HC595_latch -> gpioService.le_gpioPin7
+    // RelayControl16.RelayControl16Component.le_HC595_reset -> gpioService.le_gpioPin8
 }

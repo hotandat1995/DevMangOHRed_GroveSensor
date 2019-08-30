@@ -1,0 +1,9 @@
+FUNCTION double get_LastLatitude
+(
+
+);
+
+FUNCTION double get_LastLongtitude
+(
+    
+);

@@ -8,9 +8,9 @@ provides:
 {
     api:
     {
-        io.api
-        admin.api
-        query.api
+        $CURDIR/../../io.api
+        $CURDIR/../../admin.api
+        $CURDIR/../../query.api
     }
 }
 

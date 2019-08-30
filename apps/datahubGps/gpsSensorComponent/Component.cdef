@@ -1,11 +1,23 @@
+cflags:
+{
+    -std=c99
+}
+
 requires:
 {
     api:
     {
-        $CURDIR/../../legatoDataHub-master/io.api
         positioning/le_pos.api
         positioning/le_posCtrl.api
         positioning/le_gnss.api
+    }
+}
+
+provides:
+{
+    api:
+    {
+        gpsSensor = gpsSensor.api
     }
 }
 

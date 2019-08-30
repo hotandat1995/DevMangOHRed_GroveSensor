@@ -1,0 +1,21 @@
+cflags:
+{
+    -std=c99
+}
+
+requires:
+{
+    api:
+    {
+        le_HC595_clock = le_gpio.api    
+        le_HC595_data  = le_gpio.api
+        le_HC595_latch = le_gpio.api
+        // le_HC595_reset = le_gpio.api
+    }
+}
+
+
+sources:
+{
+    HC595_16P.c
+}

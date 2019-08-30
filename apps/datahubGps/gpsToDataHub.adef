@@ -1,0 +1,24 @@
+sandboxed: true
+start: auto
+version: 1.0
+
+executables:
+{
+    gpsToDataHub = (gpsToDataHub)
+}
+
+processes:
+{
+    run:
+    {
+        ( gpsToDataHub )
+    }
+}
+
+bindings:
+{
+    gpsToDataHub.gpsToDataHub.io -> dataHub.io
+    gpsToDataHub.gpsToDataHub.admin -> dataHub.admin
+    
+    gpsToDataHub.gpsToDataHub.gpsSensor -> gpsSensorComponent.gpsSensor
+}

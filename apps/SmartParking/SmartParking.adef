@@ -1,0 +1,23 @@
+sandboxed: true
+start: auto
+version: 1.0
+
+executables:
+{
+    SmarkParking = (SpaceSttComponent)
+}
+
+processes:
+{
+    run:
+    {
+        ( SmarkParking )
+    }
+}
+
+bindings:
+{
+    SmarkParking.SpaceSttComponent.le_avdata -> avcService.le_avdata
+    SmarkParking.SpaceSttComponent.io -> dataHub.io
+    SmarkParking.SpaceSttComponent.admin -> dataHub.admin
+}

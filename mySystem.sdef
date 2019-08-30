@@ -1,14 +1,15 @@
 #include "$LEGATO_ROOT/default.sdef"
-buildVars:
-{
-    MANGOH_BOARD = red
-    // LEGATO_WIFI_ROOT=${LEGATO_ROOT}/modules/WiFi
-    // // File is selected by users, replace "ti" with "qca" to support qca chipset
-    // LEGATO_WIFI_PA=${LEGATO_WIFI_ROOT}/service/platformAdaptor/ti/pa_wifi.sh
-}
+// buildVars:
+// {
+//     MANGOH_BOARD = red
+//     // LEGATO_WIFI_ROOT=${LEGATO_ROOT}/modules/WiFi
+//     // // File is selected by users, replace "ti" with "qca" to support qca chipset
+//     // LEGATO_WIFI_PA=${LEGATO_WIFI_ROOT}/service/platformAdaptor/ti/pa_wifi.sh
+// }
 
 apps:
 {
+    $LEGATO_ROOT/apps/sample/dataHub/dataHub.adef
     // WiFi services
     // $LEGATO_WIFI_ROOT/service/wifiService.adef
     // $LEGATO_WIFI_ROOT/apps/sample/wifiClientTest/wifiClientTest.adef
@@ -17,37 +18,36 @@ apps:
     // $LEGATO_WIFI_ROOT/apps/tools/wifi/wifi.adef
 }
 
-kernelModules:
-{
-    $CURDIR/linux_kernel_modules/mangoh/mangoh_red
+// kernelModules:
+// {
+//     $CURDIR/linux_kernel_modules/mangoh/mangoh_red
     
-    /*
-     * Dependencies of the above kernel modules - must be listed explicitly in the SDEF due to the
-     * way that Legato kernel module dependencies work
-     */
-    $CURDIR/linux_kernel_modules/led/led
-    $CURDIR/linux_kernel_modules/bq24296/bq24296
-    $CURDIR/linux_kernel_modules/ltc294x/ltc294x
-    $CURDIR/linux_kernel_modules/bq27xxx/bq27xxx_battery
+//     /*
+//      * Dependencies of the above kernel modules - must be listed explicitly in the SDEF due to the
+//      * way that Legato kernel module dependencies work
+//      */
+//     $CURDIR/linux_kernel_modules/led/led
+//     $CURDIR/linux_kernel_modules/bq24296/bq24296
+//     $CURDIR/linux_kernel_modules/ltc294x/ltc294x
+//     $CURDIR/linux_kernel_modules/bq27xxx/bq27xxx_battery
     
-    $CURDIR/linux_kernel_modules/bmp280/bmp280-i2c
-    $CURDIR/linux_kernel_modules/bmp280/bmp280
-    $CURDIR/linux_kernel_modules/bmi160/bmi160-i2c
-    $CURDIR/linux_kernel_modules/bmi160/bmi160
+//     $CURDIR/linux_kernel_modules/bmp280/bmp280-i2c
+//     $CURDIR/linux_kernel_modules/bmp280/bmp280
+//     $CURDIR/linux_kernel_modules/bmi160/bmi160-i2c
+//     $CURDIR/linux_kernel_modules/bmi160/bmi160  
 
-    #if ${MANGOH_KERNEL_LACKS_IIO} = 1
+//     #if ${MANGOH_KERNEL_LACKS_IIO} = 1
 
-        $CURDIR/linux_kernel_modules/iio/iio-triggered-buffer
-        $CURDIR/linux_kernel_modules/iio/iio-kfifo-buf
-        $CURDIR/linux_kernel_modules/iio/iio
+//         $CURDIR/linux_kernel_modules/iio/iio-triggered-buffer
+//         $CURDIR/linux_kernel_modules/iio/iio-kfifo-buf
+//         $CURDIR/linux_kernel_modules/iio/iio
 
-    #endif // MANGOH_KERNEL_LACKS_IIO
-    /*
-     * Module wifi
-     */
-    // $CURDIR/linux_kernel_modules/mt7697wifi/mt7697wifi_core
-    // $CURDIR/linux_kernel_modules/cp2130/cp2130
-    // $CURDIR/linux_kernel_modules/mt7697q/mt7697q
-    // $CURDIR/linux_kernel_modules/mt7697serial/mt7697serial
-    
-}
+//     #endif // MANGOH_KERNEL_LACKS_IIO
+//     /*
+//      * Module wifi
+//      */
+//     // $CURDIR/linux_kernel_modules/mt7697wifi/mt7697wifi_core
+//     // $CURDIR/linux_kernel_modules/cp2130/cp2130
+//     // $CURDIR/linux_kernel_modules/mt7697q/mt7697q
+//     // $CURDIR/linux_kernel_modules/mt7697serial/mt7697serial
+// }

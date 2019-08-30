@@ -1,20 +1,35 @@
+sandboxed: true
+start: auto
+version: 1.0
+
 executables:
 {
-    gpsSensord = ( gpsSensor )
+    gpsSensorService = ( gpsSensorComponent )
+    // gpsToDataHub = (gpsToDataHub)
 }
 
 processes:
 {
     run:
     {
-        ( gpsSensord )
+        ( gpsSensorService )
+        ( gpsToDataHub )
     }
+}
+
+extern:
+{
+    gpsSensor = gpsSensorService.gpsSensorComponent.gpsSensor
 }
 
 bindings:
 {
-    gpsSensord.gpsSensor.io -> dataHub.io
-    gpsSensord.gpsSensor.le_pos -> positioningService.le_pos
-    gpsSensord.gpsSensor.le_posCtrl -> positioningService.le_posCtrl
-    gpsSensord.gpsSensor.le_gnss -> positioningService.le_gnss
+    gpsSensorService.gpsSensorComponent.le_pos -> positioningService.le_pos
+    gpsSensorService.gpsSensorComponent.le_posCtrl -> positioningService.le_posCtrl
+    gpsSensorService.gpsSensorComponent.le_gnss -> positioningService.le_gnss
+
+    // gpsToDataHub.gpsToDataHub.io -> dataHub.io
+    // gpsToDataHub.gpsToDataHub.admin -> dataHub.admin
+    // gpsSensorService.gpsSensorComponent.io    -> dataHub.io
+    // gpsSensorService.gpsSensorComponent.admin -> dataHub.admin
 }

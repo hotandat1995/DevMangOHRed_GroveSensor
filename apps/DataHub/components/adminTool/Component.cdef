@@ -15,9 +15,9 @@ requires:
 {
     api:
     {
-        admin.api [manual-start]
-        query.api [manual-start]
-        io.api [manual-start]
+        $CURDIR/../../admin.api [manual-start]
+        $CURDIR/../../query.api [manual-start]
+        $CURDIR/../../io.api [manual-start]
     }
 
     component:
